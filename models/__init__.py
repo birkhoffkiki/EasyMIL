@@ -21,7 +21,7 @@ __implemented_models = {
     'mae_vit_huge_patch14_1000slides_9epoch': '/storage/Pathology/results/pretrain/Vit_huge_1000_slides/checkpoint_9/model_fp32.pth',
     'mae_vit_huge_patch14_1000slides_0epoch': '/storage/Pathology/results/pretrain/Vit_huge_1000_slides/checkpoint_0/model.pth',
     'mae_vit_huge_patch14_1000slides_22epoch': '/storage/Pathology/results/pretrain/Vit_huge_1000_slides/checkpoint_22/model.pth',
-    'dinov2_vitl': '/storage/Pathology/results/dinov2/eval/training_624999/teacher_checkpoint.pth',
+    'dinov2_vitl': 'models/ckpts/dinov2_cpath_v1.pth',
     'phikon': 'sota'
 }
 
