@@ -26,6 +26,10 @@ def find_mil_model(model_name, in_dim, n_classes, drop_out, task_type, dataset_n
     if model_name.lower() == 'dtfd':
         from .dtfd.dtfd_mil import DTFD_Model
         model = DTFD_Model(in_dim, num_cls=n_classes, droprate=drop_out, droprate_2=drop_out, task=task_type)
+    
+    elif model_name.lower() == 'wikg':
+        from .wikg import WiKG
+        model = WiKG(in_dim, n_classes=n_classes, task_type=task_type)
         
     elif model_name.lower() == 'att_mil':
         from .att_mil import DAttention
@@ -56,35 +60,6 @@ def find_mil_model(model_name, in_dim, n_classes, drop_out, task_type, dataset_n
         instance_loss_fn = SmoothTop1SVM(n_classes = 2).cuda()
         model = CLAM_SB(in_dim, n_classes=n_classes, dropout=drop_out, task_type=task_type, instance_loss_fn=instance_loss_fn)    
     
-    
-
-    elif model_name.lower() == 'wsi_agg_sup':
-        from .wsi_agg.vision_transformer import WSI_Model
-        model = WSI_Model(in_dim, n_classes, task_type)
-        ckpt = torch.load('/storage/Pathology/results/aggregator_supervised_37377_self_attention/6.pth/pytorch_model.bin', map_location='cpu')
-        ckpt = {k: v for k, v in ckpt.items() if not k in ['mlp_head.weight', 'mlp_head.bias']}
-        msg = model.load_state_dict(ckpt, strict=False)
-        print(msg)
-
-    elif model_name.lower() == 'wsi_agg_sup_depth1':
-        from .wsi_agg.vision_transformer_d1 import WSI_Model
-        model = WSI_Model(in_dim, n_classes, task_type)
-        ckpt = torch.load('/storage/Pathology/results/aggregator_supervised_37377_self_attention_depth2/17.pth/pytorch_model.bin', map_location='cpu')
-        ckpt = {k: v for k, v in ckpt.items() if not k in ['mlp_head.weight', 'mlp_head.bias']}
-        msg = model.load_state_dict(ckpt, strict=False)
-        print(msg)
-    elif model_name.lower() =='wsi_hybrid':
-        from .wsi_agg.hybrid_ssl import Hybrid_WSI_Model
-        model = Hybrid_WSI_Model(in_dim, n_classes, task_type)
-        ckpt = torch.load('/storage/Pathology/results/aggregator_hybrid_37377_self_attention_depth1/9.pth', map_location='cpu')
-        ckpt = {k: v for k, v in ckpt.items() if 'sup_head' not in k}
-        msg = model.load_state_dict(ckpt, strict=False)
-        print(msg)
-    
-    elif model_name.lower() == 'fp_wsi':
-        from .fp_wsi.model import CLAM_MB_FP, CLAM_FP
-        model = CLAM_FP(in_dim=in_dim, gate=True, dropout=0.15, k_sample=8, n_classes=n_classes, task_type=task_type)
-    
     elif model_name.lower() == 'simple':
         from .simple_mil import Simple
         model = Simple(in_dim=in_dim, n_classes=n_classes, act='gelu', task=task_type)
@@ -111,7 +86,7 @@ def find_mil_model(model_name, in_dim, n_classes, drop_out, task_type, dataset_n
             samples_per_cls = []
             
         print('Sample_per_cls has been set:', samples_per_cls)
-        model = MoE(in_dim=in_dim, n_classes=n_classes, act='gelu', task=task_type, samples_per_cls=samples_per_cls) 
+        model = MoE(in_dim=in_dim, n_classes=n_classes, task=task_type, samples_per_cls=samples_per_cls) 
 
     elif model_name.lower() == 'mamba':
         from .mamba_moe.model import MoE

@@ -1,7 +1,7 @@
 
 # model_names="max_mil mean_mil att_mil trans_mil ds_mil dtfd"
 model_names="att_mil"
-backbones="resnet50 ctranspath plip"
+backbones="dinov2_vitl dinov2_vitl16_split1"
 
 
 declare -A in_dim
@@ -9,6 +9,7 @@ in_dim["resnet50"]=1024
 in_dim["resnet101"]=1024
 in_dim["ctranspath"]=768
 in_dim["dinov2_vitl"]=1024
+in_dim["dinov2_vitl16_split1"]=1024
 in_dim["dinov2_vitl||ctranspath"]="1024||768"
 in_dim["plip"]=512
 
@@ -18,7 +19,7 @@ gpus["clam_sb"]=7
 gpus["clam_mb"]=4
 gpus["mean_mil"]=6
 gpus["max_mil"]=6
-gpus["att_mil"]=6
+gpus["att_mil"]=7
 gpus['trans_mil']=7
 gpus['ds_mil']=6
 gpus['dtfd']=6

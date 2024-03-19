@@ -5,13 +5,14 @@
 # model_names="hat_encoder_256_32_nomem"
 model_names='att_mil'
 
-backbones="plip resnet50 ctranspath"
+backbones="phikon"
 
 # backbones="dinov2_vitl||ctranspath"
 
 declare -A in_dim
 in_dim["resnet50"]=1024
 in_dim["ctranspath"]=768
+in_dim["phikon"]=768
 in_dim["dinov2_vitl"]=1024
 in_dim["plip"]=512
 in_dim["dinov2_vitl||ctranspath"]="1024||768"

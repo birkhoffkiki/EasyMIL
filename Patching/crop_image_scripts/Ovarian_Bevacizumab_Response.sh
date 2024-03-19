@@ -1,9 +1,8 @@
 # template
 # configuration
-dataset="PAIP2021"
-wsi_root="/jhcnas3/Pathology/original_data/"$dataset
+dataset="Ovarian_Bevacizumab_Response"
+wsi_root="/jhcnas3/Pathology/original_data/Ovarian_Bevacizumab_Response"
 wsi_format="svs"
-
 
 log_path="./crop_image_scripts/"$dataset".log"
 root="/storage/Pathology/Patches/"$dataset

@@ -268,6 +268,7 @@ class MoE(BaseMILModel):
         else:
             raise NotImplementedError
         loss = loss + outputs['aux_loss']*0.5
+        
         self.opt_wsi.zero_grad()
         loss.backward()
         self.opt_wsi.step()

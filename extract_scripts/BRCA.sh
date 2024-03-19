@@ -27,10 +27,10 @@ ramdisk_cache="/mnt/ramdisk/BRCA"
 # models="mae_vit_large_patch16-1-140000"
 # models="mae_vit_l_1000slides_19epoch"
 # models="mae_vit_huge_patch14_1000slides_22epoch"
-models="phikon"
+models="dinov2_vitl16_split1"
 
 declare -A gpus
-gpus["mae_vit_l_1000slides_19epoch"]=0
+gpus["dinov2_vitl16_split1"]=5
 gpus['ctranspath']=0
 gpus['phikon']=1
 gpus["dinov2_vitl"]=1

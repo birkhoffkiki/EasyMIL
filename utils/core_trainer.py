@@ -238,6 +238,7 @@ class TrainEngine:
                 loss.backward()
                 self.optimizer.step()
                 self.optimizer.zero_grad()
+                outputs['loss'] = loss
             
             # to support batch size greater than 1
             if isinstance(label, torch.Tensor):
@@ -254,10 +255,13 @@ class TrainEngine:
                 raise RuntimeError('Found Nan number')
             
             if (batch_idx + 1) % 20 == 0:
-                if isinstance(data, torch.Tensor):
-                    print('batch {}, loss: {:.4f}, label: {}, bag_size: {}'.format(batch_idx, loss_value, label.item(), data.size(0)), flush=True)
-                else:
-                    print('batch {}, loss: {:.4f}'.format(batch_idx, loss_value), flush=True)
+                bag_size = data[0].shape[0] if isinstance(data, list) else data.shape[0]
+                print('batch {}'.format(batch_idx), end=',')
+                for k, v in outputs.items():
+                    if 'loss' in k:
+                        print('{}:{:.4f}'.format(k, v.item()), end=',')
+                print(' label: {}, bag_size: {}'.format(label.item(), bag_size), flush=True)
+                    
                     
             error = calculate_error(Y_hat, label)
             train_loss += loss_value
@@ -348,7 +352,7 @@ class TrainEngine:
             print('class {}: acc {}, correct {}/{}'.format(i, acc, correct, count))     
 
         # val_error is better than val_loss
-        self.early_stopping(epoch, -auc, self.model, ckpt_name = os.path.join(self.result_dir, "s_{}_checkpoint.pt".format(self.fold)))
+        self.early_stopping(epoch, val_error, self.model, ckpt_name = os.path.join(self.result_dir, "s_{}_checkpoint.pt".format(self.fold)))
         
         if self.early_stopping.early_stop:
             print("Early stopping")

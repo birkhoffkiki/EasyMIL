@@ -1,10 +1,8 @@
 
-model_names="moe"
+model_names="wikg"
 
-# backbones="dinov2_vitl||ctranspath"
-# backbones="phikon"
+# backbones="phikon||dinov2_vitl||ctranspath"
 backbones="dinov2_vitl"
-# backbones="plip ctranspath resnet50"
 
 declare -A in_dim
 in_dim["resnet50"]=1024
@@ -12,16 +10,18 @@ in_dim["ctranspath"]=768
 in_dim["phikon"]=768
 in_dim["dinov2_vitl"]=1024
 in_dim["dinov2_vitl||ctranspath"]="1024||768"
+in_dim["phikon||dinov2_vitl||ctranspath"]="768||1024||768"
 in_dim["plip"]=512
 
 
 declare -A gpus
 gpus["clam_sb"]=3
 gpus['dtfd']=2
+gpus['wikg']=4
 gpus["mean_mil"]=2
 gpus["max_mil"]=4
-gpus["att_mil"]=2
-gpus["moe"]=1
+gpus["att_mil"]=4
+gpus["moe_a2o"]=0
 gpus["simple"]=1
 
 

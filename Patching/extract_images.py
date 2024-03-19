@@ -23,6 +23,9 @@ def get_wsi_handle(wsi_path):
 
 def read_images(arg):
     h5_path, save_root, wsi_path, size, level = arg
+    if wsi_path is None:
+        return
+    
     if not os.path.exists(save_root):
         os.makedirs(save_root)
 
@@ -30,7 +33,9 @@ def read_images(arg):
     try:
         h5 = h5py.File(h5_path)
     except:
-        raise RuntimeError(f'{h5_path} is not readable....')
+        print(f'{h5_path} is not readable....')
+        return
+        # raise RuntimeError(f'{h5_path} is not readable....')
     
     _num = len(h5['coords'])
     if _num == len(os.listdir(save_root)):
@@ -80,7 +85,10 @@ def get_wsi_path(wsi_root, h5_files, datatype, wsi_format):
             # print(wsi_file_name, p)
             # print(all_paths)
             if len(p) != 1:
-                raise RuntimeError
+                print('failed to process:', p)
+                kv[prefix] = None
+                continue
+                # raise RuntimeError
             p = os.path.split(p[0])[0]
             kv[prefix] = p
 
@@ -93,7 +101,11 @@ def get_wsi_path(wsi_root, h5_files, datatype, wsi_format):
         prefix = os.path.splitext(h)[0]
         print(prefix)
         r = kv[prefix]
-        p = os.path.join(r, prefix+'.'+wsi_format)
+        if r is None:
+            p = None
+        else:
+            p = os.path.join(r, prefix+'.'+wsi_format)
+
         wsi_paths.append(p)
     
     return wsi_paths
@@ -133,5 +145,6 @@ if __name__ == '__main__':
 
     mp = Pool(parser.cpu_cores)
     mp.map(read_images, args)
+    print('All slides have been cropped!')
 
 

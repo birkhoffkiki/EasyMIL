@@ -6,13 +6,14 @@ DATA_DIRECTORY="/jhcnas3/Pathology/original_data/TUPAC16/slides"
 #---------------------------------------
 root_dir="/storage/Pathology/codes/EasyMIL/extract_scripts/"
 ramdisk_cache="/mnt/ramdisk/"$dataset
-models="ctranspath"
-# models="resnet50 plip ctranspath phikon"
+# models="dinov2_vitl16_split1"
+models="plip"
 
 declare -A gpus
 gpus["dinov2_vitl"]=6
 gpus["phikon"]=1
-gpus["plip"]=2
+gpus["plip"]=4
+gpus["dinov2_vitl16_split1"]=2
 gpus["ctranspath"]=3
 gpus["resnet50"]=7
 use_cache="no"

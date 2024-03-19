@@ -2,25 +2,28 @@
 # BRACS MIL scripts
 # model_names="clam_sb clam_mb mean_mil max_mil att_mil"
 model_names="att_mil"
-# model_names="trans_mil"
-
-backbones="phikon"
+# model_names="moe_a2o"
 
 # backbones="dinov2_vitl||ctranspath"
 
+backbones="dinov2_vitl16_split1"
+
 declare -A in_dim
 in_dim["resnet50"]=1024
+in_dim["dinov2_vitl16_split1"]=1024
 in_dim["ctranspath"]=768
 in_dim["phikon"]=768
 in_dim["dinov2_vitl"]=1024
 in_dim["plip"]=512
 in_dim["dinov2_vitl||ctranspath"]="1024||768"
+in_dim["phikon||dinov2_vitl||ctranspath"]="768||1024||768"
 
 declare -A gpus
 gpus["clam_sb"]=3
 gpus["max_mil"]=4
-gpus["att_mil"]=0
-gpus['moe']=1
+gpus["att_mil"]=7
+gpus["wikg"]=7
+gpus['moe_a2o']=0
 gpus['mamba']=7
 gpus['trans_mil']=5
 gpus['dtfd']=1
@@ -42,7 +45,7 @@ do
         echo $exp", GPU is:"${gpus[$model]}
         export CUDA_VISIBLE_DEVICES=${gpus[$model]}
         # k_start and k_end, only for resuming, default is -1
-        k_start=0
+        k_start=-1
         k_end=-1
         nohup python main.py \
             --drop_out \

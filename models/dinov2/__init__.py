@@ -16,23 +16,37 @@ def build_model(device, gpu_num, model_name, ckpt_path):
             ffn_bias=True,
         )
         teacher = vits.__dict__['vit_large'](**vit_kwargs)
-        ckpt = torch.load(ckpt_path)['teacher']
-        # rename keys
-        new_ckpt = {}
-        for k, v in ckpt.items():
-            if 'backbone' in k:
-                k = '.'.join(k.split('.')[1:])
-                new_ckpt[k] = v
-        msg = teacher.load_state_dict(new_ckpt)
-        print(msg)
-        # cuda setting
-        teacher.to(device)
-        if gpu_num > 1:
-            teacher = torch.nn.parallel.DataParallel(teacher)
-        teacher.eval()
-        return teacher, teacher.embed_dim
+    elif model_name == 'dinov2_vitl16_split1':
+        vit_kwargs = dict(
+            img_size=224,
+            patch_size=16,
+            init_values=1.0e-05,
+            ffn_layer='swiglufused',
+            block_chunks=4,
+            qkv_bias=True,
+            proj_bias=True,
+            ffn_bias=True,
+        )
+        teacher = vits.__dict__['vit_large'](**vit_kwargs)
+        
     else:
         raise NotImplementedError(f'{model_name} is not implemented...')
+
+    ckpt = torch.load(ckpt_path)['teacher']
+    # rename keys
+    new_ckpt = {}
+    for k, v in ckpt.items():
+        if 'backbone' in k:
+            k = '.'.join(k.split('.')[1:])
+            new_ckpt[k] = v
+    msg = teacher.load_state_dict(new_ckpt)
+    print(msg)
+    # cuda setting
+    teacher.to(device)
+    if gpu_num > 1:
+        teacher = torch.nn.parallel.DataParallel(teacher)
+    teacher.eval()
+    return teacher, teacher.embed_dim
 
 
 def build_transform():

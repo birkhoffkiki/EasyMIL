@@ -1,27 +1,26 @@
-# model_names="wsi_agg_sup_depth1"
-model_names="simple"
-# model_names="att_mil clam_sb max_mil"
+model_names="moe_a2o"
 
-# backbones="resnet50"
-# backbones="resnet50 resnet101 vit_base_patch16_224_21k vit_large_patch16_224_21k"
-# backbones="mae_vit_large_patch16-1epoch-180M"
-# backbones="plip ctranspath"
-backbones="dinov2_vitl"
+backbones="phikon||dinov2_vitl||ctranspath"
+
+# backbones="dinov2_vitl||ctranspath"
 
 declare -A in_dim
 in_dim["resnet50"]=1024
-in_dim["resnet101"]=1024
 in_dim["ctranspath"]=768
+in_dim["phikon"]=768
 in_dim["dinov2_vitl"]=1024
 in_dim["plip"]=512
-
+in_dim["dinov2_vitl||ctranspath"]="1024||768"
+in_dim["phikon||dinov2_vitl||ctranspath"]="768||1024||768"
 
 declare -A gpus
-gpus["clam_sb"]=5
-gpus["mean_mil"]=2
-gpus["max_mil"]=2
-gpus["att_mil"]=2
-gpus["trans_mil"]=3
+gpus["clam_sb"]=3
+gpus["max_mil"]=4
+gpus["att_mil"]=0
+gpus['moe_a2o']=7
+gpus['mamba']=7
+gpus['trans_mil']=5
+gpus['dtfd']=1
 
 
 log_dir="/storage/Pathology/codes/EasyMIL/eval_scripts/logs"

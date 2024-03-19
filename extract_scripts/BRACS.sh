@@ -3,10 +3,10 @@ root_dir="/storage/Pathology/codes/EasyMIL/extract_scripts/"
 ramdisk_cache="/mnt/ramdisk/BRACS"
 use_cache="no"
 
-models="phikon"
+models="dinov2_vitl16_split1"
 
 declare -A gpus
-gpus["dinov2_vitl"]=6
+gpus["dinov2_vitl16_split1"]=6
 gpus["phikon"]=7
 gpus["plip"]=6
 gpus["ctranspath"]=5

@@ -1,9 +1,9 @@
 
 # camely MIL scripts
 
-model_names="att_mil"
+model_names="moe"
 
-backbones="phikon"
+backbones="dinov2_vitl"
 # backbones="dinov2_vitl||ctranspath"
 
 
@@ -22,7 +22,7 @@ gpus["clam_mb"]=4
 gpus["mean_mil"]=4
 gpus["max_mil"]=4
 gpus["att_mil"]=1
-gpus["moe"]=7
+gpus["moe"]=4
 
 
 
