@@ -1,6 +1,8 @@
-# RCC = (KIRP, KICH, KIRC)
 python create_splits_seq.py \
+    --prefix splits712 \
     --task RCC \
     --seed 1 \
     --label_frac 1.0 \
-    --k 10
+    --val_frac 0.1 \
+    --test_frac 0.2 \
+    --k 1
