@@ -4,7 +4,7 @@ from torchvision import transforms
 
 
 def build_model(device, gpu_num, model_name, ckpt_path):
-    if model_name == 'dinov2_vitl':
+    if model_name in ['dinov2_vitl', 'dinov2_vitl14_split1']:
         vit_kwargs = dict(
             img_size=224,
             patch_size=14,

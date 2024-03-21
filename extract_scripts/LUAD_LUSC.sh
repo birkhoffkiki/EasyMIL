@@ -5,11 +5,14 @@ ramdisk_cache="/mnt/ramdisk/LUAD_LUSC"
 use_cache="no"
 mkdir $ramdisk_cache;
 
-# models="mae_vit_l_1000slides_19epoch"
-models="phikon"
-tasks="LUAD"
+# models="phikon"
+models="dinov2_vitl16_split1 dinov2_vitl14_split1"
+
+tasks="LUAD LUSC"
 declare -A gpus
 gpus["dinov2_vitl"]=0
+gpus["dinov2_vitl16_split1"]=5
+gpus["dinov2_vitl14_split1"]=5
 gpus["phikon"]=6
 gpus["plip"]=2
 

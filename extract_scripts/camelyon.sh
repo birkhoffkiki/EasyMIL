@@ -1,15 +1,19 @@
 # Camelyon
 # save log
 root_dir="/storage/Pathology/codes/EasyMIL/extract_scripts/"
+
 tasks="CAMELYON16"
-models="phikon"
+
+models="dinov2_vitl14_split1"
+
 use_cache="no"
 
 declare -A gpus
 gpus["phikon"]=2
 gpus["plip"]=6
 gpus["dinov2_vitl"]=5
-
+gpus["dinov2_vitl16_split1"]=4
+gpus["dinov2_vitl14_split1"]=2
 
 declare -A wsi_roots
 wsi_roots["CAMELYON16"]="/jhcnas3/Pathology/original_data/CAMELYON16/WSIs"
@@ -36,12 +40,12 @@ do
                         --data_slide_dir $DATA_DIRECTORY \
                         --csv_path $CSV_FILE_NAME \
                         --feat_dir $FEATURES_DIRECTORY \
-                        --batch_size 64 \
+                        --batch_size 24 \
                         --model $model \
                         --datatype $datatype \
                         --use_cache $use_cache \
                         --slide_ext $ext \
                         --save_storage $save_storage \
-                        --ramdisk_cache $ramdisk_cache > $root_dir"/logs/"$task"_log_$model.txt" 2>&1 &
+                        --ramdisk_cache $ramdisk_cache > $root_dir"/logs/"$task"_log_$model.log" 2>&1 &
         done
 done
