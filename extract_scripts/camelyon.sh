@@ -2,9 +2,9 @@
 # save log
 root_dir="/storage/Pathology/codes/EasyMIL/extract_scripts/"
 
-tasks="CAMELYON16"
+tasks="CAMELYON16 CAMELYON17"
 
-models="dinov2_vitl14_split1"
+models="dinov2_vitl14_split1 dinov2_vitl16_split1"
 
 use_cache="no"
 
@@ -12,8 +12,8 @@ declare -A gpus
 gpus["phikon"]=2
 gpus["plip"]=6
 gpus["dinov2_vitl"]=5
-gpus["dinov2_vitl16_split1"]=4
-gpus["dinov2_vitl14_split1"]=2
+gpus["dinov2_vitl16_split1"]=3
+gpus["dinov2_vitl14_split1"]=3
 
 declare -A wsi_roots
 wsi_roots["CAMELYON16"]="/jhcnas3/Pathology/original_data/CAMELYON16/WSIs"

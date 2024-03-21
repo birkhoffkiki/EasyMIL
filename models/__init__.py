@@ -94,6 +94,14 @@ def get_model(model_name, device, gpu_num):
         from models.plip import plip
         model = plip(device, gpu_num)
         
+    elif model_name.lower() == 'uni':
+        from models.uni import get_uni_model
+        model = get_uni_model(device)
+
+    elif model_name.lower() == 'conch':
+        from models.conch import get_conch_model
+        model = get_conch_model(device=device)
+        
     elif model_name == 'phikon':
         from models.phikon import get_phikon
         model = get_phikon(device, gpu_num)
@@ -125,10 +133,19 @@ def get_custom_transformer(model_name):
     if model_name in ['resnet50', 'resnet101']:
         from models.resnet_custom import custom_transforms
         custom_trans = custom_transforms()
-    elif model_name in ['vit_base_patch16_224_21k', 'vit_large_patch16_224_21k', 'vit_huge_patch14_224_21k', 'phikon']:
+    elif model_name in ['vit_base_patch16_224_21k', 'vit_large_patch16_224_21k', 
+                        'vit_huge_patch14_224_21k', 'phikon',]:
         # Do nothing, let vit process do the image processing
         from torchvision import transforms as tt
         custom_trans = tt.Lambda(lambda x: torch.from_numpy(np.array(x)))
+        
+    elif model_name.lower() == 'uni':
+        from models.uni import get_uni_trans
+        custom_trans = get_uni_trans()
+    
+    elif model_name.lower() == 'conch':
+        from models.conch import get_conch_trans
+        custom_trans = get_conch_trans()
         
     elif model_name in ['mae_vit_large_patch16-1-40000', 'mae_vit_large_patch16-1-140000',
                         'mae_vit_l_1000slides_19epoch', 'mae_vit_l_10000slides_3epoch',

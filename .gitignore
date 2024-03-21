@@ -5,3 +5,5 @@ __pycache__/
 *.pth
 *.log
 *.txt
+*.bin
+extract_scripts/*.sh
