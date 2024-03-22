@@ -127,6 +127,17 @@ elif args.task == 'TCGA_BRCA_subtyping':
                             patient_strat=False,
                             ignore=[])
 
+elif args.task == 'TCGA_BRCA_molecular_subtyping':
+    args.n_classes=5
+    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/BRCA_molecular_subtyping.csv',
+                            data_dir= None,
+                            shuffle = False, 
+                            seed = args.seed, 
+                            print_info = True,
+                            label_dict = {'Normal':0, 'LumA':1, 'LumB':2, 'Basal':3, 'Her2':4},
+                            patient_strat=False,
+                            ignore=[])
+
 elif args.task == 'UBC-OCEAN':
     args.n_classes=5
     dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/UBC-OCEAN.csv',

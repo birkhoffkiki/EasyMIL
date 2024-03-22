@@ -94,6 +94,16 @@ def get_subtying_dataset(task, seed=119):
                                 patient_strat=False,
                                 ignore=[])
 
+    elif task == 'TCGA_BRCA_molecular_subtyping':
+        dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/BRCA_molecular_subtyping.csv',
+                                data_dir= None,
+                                shuffle = False, 
+                                seed = seed, 
+                                print_info = True,
+                                label_dict = {'Normal':0, 'LumA':1, 'LumB':2, 'Basal':3, 'Her2':4},
+                                patient_strat=False,
+                                ignore=[])
+    
     elif task == 'UBC-OCEAN':
         dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/UBC-OCEAN.csv',
                                 data_dir= None,
