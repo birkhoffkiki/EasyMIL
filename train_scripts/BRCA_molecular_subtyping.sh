@@ -1,10 +1,10 @@
 
-# BRCA MIL scripts
-model_names="wikg"
-# model_names="DTFD clam_sb max_mil mean_mil trans_mil ds_mil"
+# BRACS MIL scripts
+#model_names="wikg"
+model_names="DTFD clam_sb max_mil mean_mil trans_mil ds_mil"
 # model_names="moe"
 
-backbones="dinov2_vitl"
+backbones="resnet50"
 
 #  plip dinov2_vitl"
 # backbones="dinov2_vitl||ctranspath"
@@ -30,8 +30,8 @@ gpus["ds_mil"]=2
 gpus["moe"]=2
 
 
-n_classes=2
-task="TCGA_BRCA_subtyping"
+n_classes=5
+task="TCGA_BRCA_molecular_subtyping"
 root_log="/storage/Pathology/codes/EasyMIL/train_scripts/logs/train_log_"$task"_"
 results_dir="/jhcnas3/Pathology/experiments/train/"$task
 model_size="small" # since the dim of feature of vit-base is 768    
