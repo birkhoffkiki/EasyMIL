@@ -1,12 +1,15 @@
 # LUAD LUSC
 # save log
-root_dir="/storage/Pathology/codes/EasyMIL/extract_scripts/logs/"
+prefix="/jhcnas3"
+
+root_dir="extract_scripts/logs/"
+
 ramdisk_cache="/mnt/ramdisk/LUAD_LUSC"
 use_cache="no"
 mkdir $ramdisk_cache;
 
 # models="phikon"
-models="dinov2_vitl14_split1"
+models="conch"
 
 tasks="LUAD LUSC"
 declare -A gpus
@@ -15,15 +18,16 @@ gpus["dinov2_vitl16_split1"]=4
 gpus["dinov2_vitl14_split1"]=6
 gpus["phikon"]=6
 gpus["plip"]=2
+gpus["conch"]=2
 
 for model in $models
 do
         for task in $tasks
         do
-                DIR_TO_COORDS="/storage/Pathology/Patches/TCGA__"$task
+                DIR_TO_COORDS=$prefix"/Pathology/Patches/TCGA__"$task
                 DATA_DIRECTORY="/jhcnas3/Pathology/original_data/TCGA/"$task"/slides"
-                CSV_FILE_NAME="/storage/Pathology/codes/EasyMIL/dataset_csv/LUAD_LUSC.csv"
-                FEATURES_DIRECTORY="/storage/Pathology/Patches/TCGA__"$task
+                CSV_FILE_NAME="dataset_csv/LUAD_LUSC.csv"
+                FEATURES_DIRECTORY=$prefix"/Pathology/Patches/TCGA__"$task
                 ext=".svs"
                 save_storage="yes"
                 datatype="tcga" # extra path process for TCGA dataset, direct mode do not care use extra path
@@ -36,12 +40,12 @@ do
                         --data_slide_dir $DATA_DIRECTORY \
                         --csv_path $CSV_FILE_NAME \
                         --feat_dir $FEATURES_DIRECTORY \
-                        --batch_size 32 \
+                        --batch_size 16 \
                         --use_cache $use_cache \
                         --model $model \
                         --datatype $datatype \
                         --slide_ext $ext \
                         --save_storage $save_storage \
-                        --ramdisk_cache $ramdisk_cache > $root_dir$task"_log_$model.txt" 2>&1 &
+                        --ramdisk_cache $ramdisk_cache > $root_dir$task"_log_$model.log" 2>&1 &
         done
 done

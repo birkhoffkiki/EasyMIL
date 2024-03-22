@@ -1,16 +1,20 @@
 # Camelyon
 # save log
-root_dir="/storage/Pathology/codes/EasyMIL/extract_scripts/"
+prefix="/jhcnas3"
+
+root_dir="extract_scripts/"
 
 tasks="CAMELYON16 CAMELYON17"
 
-models="dinov2_vitl14_split1 dinov2_vitl16_split1"
+models="conch"
+# models="dinov2_vitl14_split1 dinov2_vitl16_split1"
 
 use_cache="no"
 
 declare -A gpus
 gpus["phikon"]=2
 gpus["plip"]=6
+gpus["conch"]=3
 gpus["dinov2_vitl"]=5
 gpus["dinov2_vitl16_split1"]=3
 gpus["dinov2_vitl14_split1"]=3
@@ -24,10 +28,10 @@ do
         for task in $tasks
         do
                 ramdisk_cache="/mnt/ramdisk/"$task
-                DIR_TO_COORDS="/storage/Pathology/Patches/"$task
+                DIR_TO_COORDS=$prefix"/Pathology/Patches/"$task
                 DATA_DIRECTORY=${wsi_roots[$task]}
-                CSV_FILE_NAME="/storage/Pathology/codes/EasyMIL/dataset_csv/camelyon.csv"
-                FEATURES_DIRECTORY="/storage/Pathology/Patches/"$task
+                CSV_FILE_NAME="dataset_csv/camelyon.csv"
+                FEATURES_DIRECTORY=$prefix"/Pathology/Patches/"$task
                 ext=".tif"
                 save_storage="yes"
                 datatype="direct" # extra path process for TCGA dataset, direct mode do not care use extra path
