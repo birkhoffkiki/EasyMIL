@@ -3,7 +3,7 @@
 model_names="att_mil"
 # model_names="moe"
 
-backbones="conch uni"
+backbones="resnet50 ctranspath phikon dinov2_vitl plip"
 
 #  plip dinov2_vitl"
 # backbones="dinov2_vitl||ctranspath"
@@ -23,7 +23,7 @@ declare -A gpus
 gpus["clam_sb"]=5
 gpus["wikg"]=6
 gpus["max_mil"]=5
-gpus["att_mil"]=5
+gpus["att_mil"]=0
 gpus['simple']=5
 gpus['DTFD']=5
 gpus["moe_a2o"]=5
@@ -32,7 +32,7 @@ gpus["moe"]=5
 gpus["trans_mil"]=5
 
 
-n_classes=5
+n_classes=4
 task="TCGA_COAD_READ_molecular_subtyping"
 root_log="/storage/Pathology/codes/EasyMIL/train_scripts/logs/train_log_"$task"_"
 results_dir="/jhcnas3/Pathology/experiments/train/"$task
