@@ -115,6 +115,17 @@ elif args.task == 'LUAD_LUSC_STAD':
                             label_dict = {'LUAD':0, 'LUSC':1, 'STAD':2 },
                             patient_strat=False,
                             ignore=[])
+    
+elif args.task == 'TCGA_COAD_READ_molecular_subtyping':
+    args.n_classes=4
+    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/COAD_READ_molecular_subtyping.csv',
+                            data_dir= None,
+                            shuffle = False, 
+                            seed = args.seed, 
+                            print_info = True,
+                            label_dict = {'CMS1':0, 'CMS2':1, 'CMS3':2, 'CMS4':3},
+                            patient_strat=False,
+                            ignore=[])
 
 elif args.task == 'TCGA_BRCA_subtyping':
     args.n_classes=2
