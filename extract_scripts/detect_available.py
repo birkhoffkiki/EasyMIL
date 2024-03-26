@@ -30,7 +30,7 @@ def print_feature_info(data_lists):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--name', type=str, default='')
+    parser.add_argument('name', type=str, default='')
     
     args = parser.parse_args()
     

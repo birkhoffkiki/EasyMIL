@@ -1,22 +1,25 @@
 # LUAD 
+prefix="/jhcnas3"
 task="STAD"
-root_dir="/storage/Pathology/codes/EasyMIL/extract_scripts/logs/STAD_log_"
+root_dir="extract_scripts/logs/STAD_log_"
 # ramdisk_cache="/home/gzr/tmp/tmp_stad"
+
 ramdisk_cache='/mnt/ramdisk/stad'
-DIR_TO_COORDS="/storage/Pathology/Patches/TCGA__STAD"
+DIR_TO_COORDS=$prefix"/Pathology/Patches/TCGA__STAD"
 DATA_DIRECTORY="/jhcnas3/Pathology/original_data/TCGA/STAD/slides"
-CSV_FILE_NAME="/storage/Pathology/codes/EasyMIL/dataset_csv/STAD.csv"
-FEATURES_DIRECTORY="/storage/Pathology/Patches/TCGA__STAD"
+CSV_FILE_NAME="dataset_csv/STAD.csv"
+FEATURES_DIRECTORY=$prefix"/Pathology/Patches/TCGA__STAD"
 ext=".svs"
 save_storage="yes"
 use_cache='no'
-models="phikon"
 
+models="conch"
 # models="ctranspath"
 declare -A gpus
 gpus["phikon"]=1
 gpus["ctranspath"]=3
 gpus["plip"]=1
+gpus["conch"]=0
 gpus["dinov2_vitl"]=2
 
 
@@ -32,7 +35,7 @@ do
                 --data_slide_dir $DATA_DIRECTORY \
                 --csv_path $CSV_FILE_NAME \
                 --feat_dir $FEATURES_DIRECTORY \
-                --batch_size 64 \
+                --batch_size 32 \
                 --model $model \
                 --use_cache $use_cache \
                 --datatype $datatype \

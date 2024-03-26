@@ -1,10 +1,10 @@
 
 # BRACS MIL scripts
 #model_names="wikg"
-model_names="DTFD clam_sb max_mil mean_mil trans_mil ds_mil"
+model_names="DTFD"
 # model_names="moe"
 
-backbones="resnet50"
+backbones="dinov2_vitl"
 
 #  plip dinov2_vitl"
 # backbones="dinov2_vitl||ctranspath"
@@ -24,7 +24,7 @@ gpus["wikg"]=1
 gpus["max_mil"]=4
 gpus["att_mil"]=1
 gpus['simple']=5
-gpus['DTFD']=3
+gpus["DTFD"]=6
 gpus["moe_a2o"]=0
 gpus["ds_mil"]=2
 gpus["moe"]=2

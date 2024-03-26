@@ -1,25 +1,28 @@
 export OPENCV_IO_MAX_IMAGE_PIXELS=11258999068426
 
+prefix="/jhcnas3"
 # save log
 dataset="UBC-OCEAN"
 ext=".png"
 DATA_DIRECTORY="/jhcnas3/Pathology/original_data/UBC-OCEAN/WSIs/train_images"
 
 #---------------------------------------
-root_dir="/storage/Pathology/codes/EasyMIL/extract_scripts/"
+root_dir="extract_scripts/"
 ramdisk_cache="/mnt/ramdisk/"$dataset
-models="phikon"
+
+models="conch"
 use_cache="no"
 
 gpus["dinov2_vitl"]=6
 gpus["phikon"]=5
+gpus["conch"]=0
 
 
 for model in $models
 do
-        DIR_TO_COORDS="/storage/Pathology/Patches/"$dataset
-        CSV_FILE_NAME="/storage/Pathology/codes/EasyMIL/dataset_csv/"$dataset".csv"
-        FEATURES_DIRECTORY="/storage/Pathology/Patches/"$dataset
+        DIR_TO_COORDS=$prefix"/Pathology/Patches/"$dataset
+        CSV_FILE_NAME="dataset_csv/"$dataset".csv"
+        FEATURES_DIRECTORY=$prefix"/Pathology/Patches/"$dataset
         save_storage="yes"
         datatype="auto" # extra path process for TCGA dataset, direct mode do not care use extra path
 

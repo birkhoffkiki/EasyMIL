@@ -88,7 +88,7 @@ elif args.task == 'PANDA':
                             shuffle = False, 
                             seed = args.seed, 
                             print_info = True,
-                            label_dict = {0:0, 1:1, 2:2, 3:3, 4: 4, 5:5},
+                            label_dict = {'0':0, '1':1, '2':2, '3':3, '4': 4, '5':5},
                             patient_strat=False,
                             ignore=[])
 
