@@ -1,11 +1,13 @@
-dataset_name = 'GTEx_Portal'
+dataset_name = 'IDH_prediction'
 
 
 if __name__ == '__main__':
     save_path = '{}.csv'.format(dataset_name)
-    h5_root = '/storage/Pathology/Patches/{}/patches'.format(dataset_name)
-    v = '/storage/Pathology/Patches/{}'.format(dataset_name)
-
+    # h5_root = '/storage/Pathology/Patches/{}/patches'.format(dataset_name)
+    # v = '/storage/Pathology/Patches/{}'.format(dataset_name)
+    h5_root = '/jhcnas3/Pathology/Patches/{}/patches'.format(dataset_name)
+    v = '/jhcnas3/Pathology/Patches/{}'.format(dataset_name)
+    
     import os
     import random
     random.seed(0)

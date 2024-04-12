@@ -7,3 +7,5 @@ __pycache__/
 *.txt
 *.bin
 extract_scripts/*.sh
+home/*
+extract_scripts/logs/*

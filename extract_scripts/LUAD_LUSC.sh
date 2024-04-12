@@ -9,15 +9,16 @@ use_cache="no"
 mkdir $ramdisk_cache;
 
 # models="phikon"
-models="conch"
+models="dinov2_vitl14_split1 uni"
 
-tasks="LUAD LUSC"
+tasks="LUSC"
 declare -A gpus
 gpus["dinov2_vitl"]=0
 gpus["dinov2_vitl16_split1"]=4
-gpus["dinov2_vitl14_split1"]=6
+gpus["dinov2_vitl14_split1"]=0
 gpus["phikon"]=6
 gpus["plip"]=2
+gpus["uni"]=1
 gpus["conch"]=2
 
 for model in $models

@@ -23,6 +23,8 @@ def print_feature_info(data_lists):
         models = os.listdir(root)
         for m in models:
             p = os.path.join(root, m)
+            if not os.path.isdir(p):
+                continue
             slides = [i for i in os.listdir(p) if '.partial' not in i]
             print('\t{}:{}'.format(m, len(slides)))
             

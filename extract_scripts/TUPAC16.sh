@@ -7,8 +7,8 @@ data_prefix="/jhcnas3/Pathology/"
 #---------------------------------------
 root_dir="extract_scripts/"
 ramdisk_cache="/mnt/ramdisk/"$dataset
-models="conch"
-# models="plip"
+# models="dinov2_vitl14_split1"
+models="ctranspath"
 
 declare -A gpus
 gpus["dinov2_vitl"]=6
@@ -17,7 +17,8 @@ gpus["uni"]=1
 gpus["conch"]=1
 gpus["plip"]=4
 gpus["dinov2_vitl16_split1"]=2
-gpus["ctranspath"]=0
+gpus["dinov2_vitl14_split1"]=5
+gpus["ctranspath"]=4
 gpus["resnet50"]=7
 use_cache="no"
 
@@ -37,7 +38,7 @@ do
                 --data_slide_dir $DATA_DIRECTORY \
                 --csv_path $CSV_FILE_NAME \
                 --feat_dir $FEATURES_DIRECTORY \
-                --batch_size 16 \
+                --batch_size 32 \
                 --model $model \
                 --use_cache $use_cache \
                 --datatype $datatype \

@@ -4,10 +4,10 @@ prefix="/jhcnas3"
 
 root_dir="extract_scripts/"
 
-tasks="CAMELYON16 CAMELYON17"
+tasks="CAMELYON17"
 
-models="conch"
-# models="dinov2_vitl14_split1 dinov2_vitl16_split1"
+# models="conch"
+models="dinov2_vitl14_split1 dinov2_vitl16_split1"
 
 use_cache="no"
 
@@ -16,8 +16,8 @@ gpus["phikon"]=2
 gpus["plip"]=6
 gpus["conch"]=3
 gpus["dinov2_vitl"]=5
-gpus["dinov2_vitl16_split1"]=3
-gpus["dinov2_vitl14_split1"]=3
+gpus["dinov2_vitl16_split1"]=1
+gpus["dinov2_vitl14_split1"]=0
 
 declare -A wsi_roots
 wsi_roots["CAMELYON16"]="/jhcnas3/Pathology/original_data/CAMELYON16/WSIs"

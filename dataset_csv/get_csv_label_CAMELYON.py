@@ -47,7 +47,7 @@ import random
 random.seed(0)
 random.shuffle(items)
 
-with open('camelyon.csv', 'w') as f:
+with open('camelyon_temps.csv', 'w') as f:
     f.write('dir,case_id,slide_id,label\n')
     for i in items:
         f.write('{},{},{},{}\n'.format(i[0], i[1], i[2], i[3]))

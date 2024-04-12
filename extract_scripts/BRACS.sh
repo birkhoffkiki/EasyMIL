@@ -5,13 +5,15 @@ root_dir="/storage/Pathology/codes/EasyMIL/extract_scripts/"
 ramdisk_cache="/mnt/ramdisk/BRACS"
 use_cache="no"
 
-models="conch"
+models="uni dinov2_vitl14_split1"
 
 declare -A gpus
 gpus["dinov2_vitl16_split1"]=6
+gpus["dinov2_vitl14_split1"]=5
 gpus["phikon"]=7
 gpus["plip"]=6
-gpus["conch"]=7
+gpus["uni"]=0
+gpus["conch"]=1
 gpus["ctranspath"]=5
 gpus["resnet50"]=6
 
@@ -34,7 +36,7 @@ do
                 --data_slide_dir $DATA_DIRECTORY \
                 --csv_path $CSV_FILE_NAME \
                 --feat_dir $FEATURES_DIRECTORY \
-                --batch_size 8 \
+                --batch_size 32 \
                 --model $model \
                 --datatype $datatype \
                 --slide_ext $ext \

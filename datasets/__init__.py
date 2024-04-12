@@ -154,6 +154,46 @@ def get_subtying_dataset(task, seed=119):
                                 patient_strat=False,
                                 ignore=[])
         
+    elif task == "TCGA_GBMLGG_IDH1":
+        dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/GBMLGG_IDH1.csv',
+                                data_dir= None,
+                                shuffle = False, 
+                                seed = seed, 
+                                print_info = True,
+                                label_dict = {'0':0, '1':1},
+                                patient_strat=False,
+                                ignore=[])
+        
+    elif task == "BCNB_ER":
+        dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/BCNB_ER.csv',
+                                data_dir= None,
+                                shuffle = False, 
+                                seed = seed, 
+                                print_info = True,
+                                label_dict = {'Negative':0, 'Positive':1},
+                                patient_strat=False,
+                                ignore=[])
+        
+    elif task == "BCNB_PR":
+        dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/BCNB_PR.csv',
+                                data_dir= None,
+                                shuffle = False, 
+                                seed = seed, 
+                                print_info = True,
+                                label_dict = {'Negative':0, 'Positive':1},
+                                patient_strat=False,
+                                ignore=[])
+
+    elif task == "BCNB_HER2":
+        dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/BCNB_HER2.csv',
+                                data_dir= None,
+                                shuffle = False, 
+                                seed = seed, 
+                                print_info = True,
+                                label_dict = {'Negative':0, 'Positive':1},
+                                patient_strat=False,
+                                ignore=[])
+
     else:
         raise NotImplementedError
     return dataset

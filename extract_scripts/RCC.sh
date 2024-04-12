@@ -8,8 +8,8 @@ use_cache="no"
 
 
 models="conch"
-# tasks="KIRC"
-tasks="KICH KIRP KIRC"
+tasks="KIRC"
+# tasks="KICH KIRP KIRC"
 
 # model="mae_vit_large_patch16"
 # model="vit_large_patch16_224_21k"
@@ -19,7 +19,7 @@ tasks="KICH KIRP KIRC"
 declare -A gpus
 gpus["KICH"]=5
 gpus["KIRC"]=5
-gpus["KIRP"]=5
+gpus["KIRP"]=4
 
 declare -A wsi_roots
 wsi_roots["KICH"]="/jhcnas3/Pathology/original_data/TCGA/KICH"

@@ -13,13 +13,15 @@ ext=".svs"
 save_storage="yes"
 use_cache='no'
 
-models="conch"
+models="dinov2_vitl14_split1"
 # models="ctranspath"
 declare -A gpus
 gpus["phikon"]=1
 gpus["ctranspath"]=3
 gpus["plip"]=1
 gpus["conch"]=0
+gpus["uni"]=6
+gpus["dinov2_vitl14_split1"]=1
 gpus["dinov2_vitl"]=2
 
 

@@ -189,6 +189,46 @@ elif args.task == 'TUPAC16':
                             label_dict = {'subtype_1':0, 'subtype_2':1, 'subtype_3':2},
                             patient_strat=False,
                             ignore=[])
+    
+elif args.task == "TCGA_GBMLGG_IDH1":
+    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/GBMLGG_IDH1.csv',
+                            data_dir= None,
+                            shuffle = False, 
+                            seed = args.seed, 
+                            print_info = True,
+                            label_dict = {'0':0, '1':1},
+                            patient_strat=False,
+                            ignore=[])
+    
+elif args.task == "BCNB_ER":
+    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/BCNB_ER.csv',
+                            data_dir= None,
+                            shuffle = False, 
+                            seed = args.seed, 
+                            print_info = True,
+                            label_dict = {'Negative':0, 'Positive':1},
+                            patient_strat=False,
+                            ignore=[])
+    
+elif args.task == "BCNB_PR":
+    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/BCNB_PR.csv',
+                            data_dir= None,
+                            shuffle = False, 
+                            seed = args.seed, 
+                            print_info = True,
+                            label_dict = {'Negative':0, 'Positive':1},
+                            patient_strat=False,
+                            ignore=[])
+
+elif args.task == "BCNB_HER2":
+    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/BCNB_HER2.csv',
+                            data_dir= None,
+                            shuffle = False, 
+                            seed = args.seed, 
+                            print_info = True,
+                            label_dict = {'Negative':0, 'Positive':1},
+                            patient_strat=False,
+                            ignore=[])
 
 else:
     raise NotImplementedError

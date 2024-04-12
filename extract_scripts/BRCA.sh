@@ -5,20 +5,20 @@ prefix="/jhcnas3"
 root_dir="extract_scripts/logs/"
 ramdisk_cache="/mnt/ramdisk/BRCA"
 use_cache="no"
-mkdir $ramdisk_cache;
+mkdir $ramdisk_cache
 
 # models="phikon"
-models="conch"
+models="uni"
 
 tasks="BRCA"
 declare -A gpus
 gpus["dinov2_vitl"]=0
 gpus["dinov2_vitl16_split1"]=4
 gpus["dinov2_vitl14_split1"]=0
-gpus["phikon"]=6
+gpus["phikon"]=1
 gpus["plip"]=2
-gpus["uni"]=5
-gpus["conch"]=7
+gpus["uni"]=1
+gpus["conch"]=0
 
 
 for model in $models

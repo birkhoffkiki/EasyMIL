@@ -11,11 +11,17 @@ root_dir="extract_scripts/"
 ramdisk_cache="/mnt/ramdisk/"$dataset
 
 models="conch"
+# models="dinov2_vitl16_split1 dinov2_vitl14_split1"
+
 use_cache="no"
 
+declare -A gpus
 gpus["dinov2_vitl"]=6
-gpus["phikon"]=5
-gpus["conch"]=0
+gpus["dinov2_vitl16_split1"]=2
+gpus["dinov2_vitl14_split1"]=4
+gpus["uni"]=3
+gpus["phikon"]=0
+gpus["conch"]=3
 
 
 for model in $models
