@@ -4,7 +4,7 @@ from torchvision import transforms
 
 
 def build_model(device, gpu_num, model_name, ckpt_path):
-    if model_name in ['dinov2_vitl', 'dinov2_vitl14_split1']:
+    if model_name in ['dinov2_vitl', 'dinov2_vitl14_split1', ]:
         vit_kwargs = dict(
             img_size=224,
             patch_size=14,
@@ -22,6 +22,19 @@ def build_model(device, gpu_num, model_name, ckpt_path):
             patch_size=16,
             init_values=1.0e-05,
             ffn_layer='swiglufused',
+            block_chunks=4,
+            qkv_bias=True,
+            proj_bias=True,
+            ffn_bias=True,
+        )
+        teacher = vits.__dict__['vit_large'](**vit_kwargs)
+        
+    elif model_name in ['distill_87499', 'distill_99999', 'distill_174999', 'distill_12499_cls_only']:
+        vit_kwargs = dict(
+            img_size=224,
+            patch_size=14,
+            init_values=1.0e-05,
+            ffn_layer='mlp',
             block_chunks=4,
             qkv_bias=True,
             proj_bias=True,

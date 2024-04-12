@@ -139,10 +139,9 @@ def custom_transforms():
     from torchvision import transforms
     mean = (0.485, 0.456, 0.406)
     std = (0.229, 0.224, 0.225)
-    trnsfrms_val = transforms.Compose(
-                                        [
-                                         transforms.ToTensor(),
-                                         transforms.Normalize(mean = mean, std = std)
-                                        ]
+    trnsfrms_val = transforms.Compose([
+                                        transforms.Resize((224, 224)),
+                                        transforms.ToTensor(),
+                                        transforms.Normalize(mean = mean, std = std)]
                                 )
     return trnsfrms_val
