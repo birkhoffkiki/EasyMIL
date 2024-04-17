@@ -11,7 +11,7 @@ ramdisk_cache="/mnt/ramdisk/read"
 root_dir="/storage/Pathology/codes/EasyMIL/extract_scripts/logs/READ_log_"
 use_cache='no'
 
-models="phikon"
+models="distill_87499"
 
 declare -A gpus
 gpus["resnet50"]=2
@@ -19,7 +19,7 @@ gpus["ctranspath"]=0
 gpus["plip"]=4
 gpus["phikon"]=1
 gpus["dinov2_vitl"]=1
-
+gpus["distill_87499"]=0
 datatype="tcga" # extra path process for TCGA dataset, direct mode do not care use extra path
 
 # for model in $models

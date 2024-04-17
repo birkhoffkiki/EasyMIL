@@ -45,6 +45,8 @@ def make_dataset(
         from downstream_tasks.datasets.pcam import DataSet
     elif dataset_name.lower() == 'wsss4luad': 
         from downstream_tasks.datasets.wsss4luad import DataSet
+    elif dataset_name.lower() == 'breakhis': 
+        from downstream_tasks.datasets.breakhis import DataSet
         
     else:
         raise NotImplementedError(f'{dataset_name}')

@@ -8,7 +8,7 @@ data_prefix="/jhcnas3/Pathology/"
 root_dir="extract_scripts/"
 ramdisk_cache="/mnt/ramdisk/"$dataset
 # models="dinov2_vitl14_split1"
-models="ctranspath"
+models="distill_87499"
 
 declare -A gpus
 gpus["dinov2_vitl"]=6
@@ -17,7 +17,7 @@ gpus["uni"]=1
 gpus["conch"]=1
 gpus["plip"]=4
 gpus["dinov2_vitl16_split1"]=2
-gpus["dinov2_vitl14_split1"]=5
+gpus["distill_87499"]=4
 gpus["ctranspath"]=4
 gpus["resnet50"]=7
 use_cache="no"

@@ -1,9 +1,9 @@
 
 # camely MIL scripts
 
-model_names="moe"
+model_names="att_mil"
 
-backbones="dinov2_vitl"
+backbones="dinov2_vitl uni conch"
 # backbones="dinov2_vitl||ctranspath"
 
 
@@ -12,7 +12,7 @@ in_dim["resnet50"]=1024
 in_dim["phikon"]=768
 in_dim["ctranspath"]=768
 in_dim["dinov2_vitl"]=1024
-in_dim["dinov2_vitl||ctranspath"]="1024||768"
+in_dim["distill_87499"]=1024
 in_dim["plip"]=512
 
 
@@ -21,14 +21,13 @@ gpus["clam_sb"]=7
 gpus["clam_mb"]=4
 gpus["mean_mil"]=4
 gpus["max_mil"]=4
-gpus["att_mil"]=1
+gpus["att_mil"]=2
 gpus["moe"]=4
 
 
-
-root_log="/storage/Pathology/codes/EasyMIL/train_scripts/logs/train_log_camelyon_"
 task="camelyon"
-results_dir="/jhcnas3/Pathology/experiments/train/"$task
+
+results_dir="/jhcnas3/Pathology/experiments/train/712_"$task
 model_size="small" # since the dim of feature of vit-base is 768    
 preloading="no"
 patch_size="512"
@@ -68,7 +67,7 @@ do
             --preloading $preloading \
             --model_size $model_size \
             --n_classes $n_classes \
-            --in_dim ${in_dim[$backbone]} > "$root_log""$model"_"$backbone.txt" 2>&1 &
+            --in_dim ${in_dim[$backbone]} > "train_scripts/logs/camelyon_$model"_"$backbone.txt" 2>&1 &
     done
 done
 

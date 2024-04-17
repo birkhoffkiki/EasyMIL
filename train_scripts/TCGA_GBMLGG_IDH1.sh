@@ -1,7 +1,8 @@
 
 model_names="att_mil"
 
-backbones="resnet50 uni plip conch phikon dinov2_vitl"
+# backbones="resnet50 uni plip conch phikon dinov2_vitl"
+backbones="ctranspath"
 
 
 declare -A in_dim
@@ -21,7 +22,7 @@ gpus["clam_sb"]=7
 gpus["clam_mb"]=4
 gpus["mean_mil"]=3
 gpus["max_mil"]=3
-gpus["att_mil"]=3
+gpus["att_mil"]=0
 gpus['trans_mil']=0
 gpus['ds_mil']=3
 gpus['dtfd']=3
@@ -47,6 +48,7 @@ model_size="small" # since the dim of feature of vit-base is 768
 preloading="no"
 patch_size="512"
 n_classes=2
+split_dir="/storage/Pathology/codes/EasyMIL/splits712/TCGA_GBMLGG_IDH1_100"
 
 
 for model in $model_names
@@ -57,15 +59,15 @@ do
         echo $exp", GPU is:"${gpus[$model]}
         export CUDA_VISIBLE_DEVICES=${gpus[$model]}
         # k_start and k_end, only for resuming, default is -1
-        k_start=-1
-        k_end=-1
+        k_start=0
+        k_end=1
         nohup python main.py \
             --drop_out \
             --early_stopping \
             --n_classes $n_classes \
             --task_type subtyping \
             --lr 1e-4 \
-            --k 10 \
+            --k 1 \
             --k_start $k_start \
             --k_end $k_end \
             --label_frac 1.0 \
@@ -74,6 +76,7 @@ do
             --weighted_sample \
             --task $task \
             --backbone $backbone \
+            --split_dir $split_dir \
             --results_dir $results_dir \
             --model_type $model \
             --log_data \
@@ -82,4 +85,5 @@ do
             --in_dim ${in_dim[$backbone]} > "$root_log""$model""$backbone.txt" 2>&1 &
     done
 done
+
 

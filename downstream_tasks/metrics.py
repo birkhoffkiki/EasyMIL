@@ -3,12 +3,9 @@
 # This source code is licensed under the Apache License, Version 2.0
 # found in the LICENSE file in the root directory of this source tree.
 
-from enum import Enum
 import logging
 from typing import Any, Dict, Optional
 
-import torch
-from torch import Tensor
 from torchmetrics import Metric, MetricCollection
 from torchmetrics.wrappers.bootstrapping import BootStrapper
 from torchmetrics.classification import MulticlassAccuracy, auroc
@@ -43,9 +40,9 @@ def build_knn_metric(num_classes):
 
 def build_linear_metric(num_classes, bootstrap=False):
     metrics: Dict[str, Metric] = {
-        "top1 acc": MulticlassAccuracy(top_k=1, num_classes=int(num_classes), average='weighted'),
-        "f1_score": F1Score(num_classes=int(num_classes), average='weighted', task='multiclass'),
-        "AUC": AUROC(num_classes=num_classes, average='weighted', task='multiclass')
+        "top1 acc": MulticlassAccuracy(top_k=1, num_classes=int(num_classes), average='macro'),
+        "f1_score": F1Score(num_classes=int(num_classes), average='macro', task='multiclass'),
+        "AUC": AUROC(num_classes=num_classes, average='macro', task='multiclass')
     }
     # boot strap wrap 
     if bootstrap:

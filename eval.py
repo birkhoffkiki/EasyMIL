@@ -5,6 +5,8 @@ import pandas as pd
 from utils.clam_utils import *
 from utils.core_trainer import TrainEngine
 from datasets import get_subtying_dataset, get_survival_dataset
+from downstream_tasks.metrics import build_linear_metric
+import json
 
 
 # Training settings
@@ -40,6 +42,9 @@ parser.add_argument('--save_dir', type=str)
 parser.add_argument('--seed', type=int, default=1)
 parser.add_argument('--in_dim', type=str, default='1024')
 parser.add_argument('--n_classes', type=int, default=2)
+# new for 712, bootstrapping and balanced evaluation
+parser.add_argument('--bootstrap', action='store_true', default=False)
+
 
 
 
@@ -121,16 +126,19 @@ if __name__ == "__main__":
         print('checkpoint path:', ckpt_paths[ckpt_idx])
         if args.task_type == 'subtyping':
             patient_results, test_error, auc, df, f1  = train_engine.eval_model(ckpt_paths[ckpt_idx])
-            all_results.append(all_results)
+            all_results.append(patient_results)
             all_auc.append(auc)
             all_f1.append(f1)
             all_acc.append(1-test_error)
             df.to_csv(os.path.join(args.save_dir, 'fold_{}.csv'.format(folds[ckpt_idx])), index=False)
+
         elif args.task_type == 'survival':
             patient_results, test_error, c_index, df = train_engine.eval_model(ckpt_paths[ckpt_idx])
             all_results.append(patient_results)
             all_c_index.append(c_index)
             df.to_csv(os.path.join(args.save_dir, 'fold_{}.csv'.format(folds[ckpt_idx])), index=False)
+        else:
+            raise NotImplementedError(f'{args.task_type} is not implmentated for evaluation, please implemnet it by youself...')
 
     if args.task_type == 'subtyping':
         final_df = pd.DataFrame({'folds': folds, 'test_auc': all_auc, 'test_acc': all_acc, 'test_f1': all_f1})
@@ -145,3 +153,18 @@ if __name__ == "__main__":
     else:
         save_name = 'summary.csv'
     final_df.to_csv(os.path.join(args.save_dir, save_name))
+
+    # --------- new evaluation-----------
+    if args.task_type == 'subtyping':
+        metric_fn = build_linear_metric(num_classes=args.n_classes, bootstrap=args.bootstrap)
+    else:
+        raise NotImplementedError
+
+
+    for slide_id, content in patient_results.items():
+        metric_fn.update(content['prob'], content['label'])
+    result = metric_fn.compute()
+    with open(os.path.join(args.save_dir, 'result.json'), 'w') as f:
+        json.dump(result, f)
+
+    

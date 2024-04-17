@@ -23,10 +23,10 @@ def get_survival_dataset(task, seed=119, data_root_dir = None):
     return dataset
 
 
-def get_subtying_dataset(task, seed=119):
+def get_subtying_dataset(task, seed=119, data_dir=None):
     if task == 'LUAD_LUSC':
         dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/LUAD_LUSC.csv',
-                                data_dir= None,
+                                data_dir= data_dir,
                                 shuffle = False, 
                                 seed = seed, 
                                 print_info = True,

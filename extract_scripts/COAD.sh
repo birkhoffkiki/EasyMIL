@@ -8,13 +8,14 @@ ext=".svs"
 save_storage="yes"
 ramdisk_cache="/mnt/ramdisk/"
 
-models="phikon"
+models="distill_87499"
 
 declare -A gpus
 gpus["phikon"]=4
 gpus['ctranspath']=0
 gpus['plip']=7
 gpus["dinov2_vitl"]=1
+gpus["distill_87499"]=0
 
 datatype="tcga" # extra path process for TCGA dataset, direct mode do not care use extra path
 

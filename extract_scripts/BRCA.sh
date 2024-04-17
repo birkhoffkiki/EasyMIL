@@ -8,7 +8,7 @@ use_cache="no"
 mkdir $ramdisk_cache
 
 # models="phikon"
-models="uni"
+models="distill_87499"
 
 tasks="BRCA"
 declare -A gpus
@@ -19,6 +19,7 @@ gpus["phikon"]=1
 gpus["plip"]=2
 gpus["uni"]=1
 gpus["conch"]=0
+gpus["distill_87499"]=0
 
 
 for model in $models

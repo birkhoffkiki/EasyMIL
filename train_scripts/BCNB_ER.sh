@@ -1,8 +1,8 @@
 
 model_names="att_mil"
 
-# backbones="resnet50 uni plip conch phikon"
-backbones="dinov2_vitl resnet50 uni plip conch phikon"
+backbones="ctranspath"
+# backbones="dinov2_vitl resnet50 uni plip phikon"
 
 
 declare -A in_dim
@@ -22,8 +22,8 @@ gpus["clam_sb"]=7
 gpus["clam_mb"]=4
 gpus["mean_mil"]=3
 gpus["max_mil"]=3
-gpus["att_mil"]=3
-gpus['trans_mil']=0
+gpus["att_mil"]=0
+gpus['trans_mil']=2
 gpus['ds_mil']=3
 gpus['dtfd']=3
 gpus['hat_encoder_256_32']=4 #√
@@ -39,8 +39,8 @@ gpus['hat_encoder_256_32_nomem']=5 #√
 gpus["moe"]=3
 
 
-
 root_log="/storage/Pathology/codes/EasyMIL/train_scripts/logs/train_log_BCNB_ER_"
+# root_log="/storage/Pathology/codes/EasyMIL/train_scripts/logs/train_log_BCNB_ER_label_stratified_"
 task="BCNB_ER"
 # results_dir="/jhcnas3/Pathology/experiments/train/"$task
 results_dir="/storage/Pathology/results/experiments/train/"$task
@@ -48,7 +48,9 @@ model_size="small" # since the dim of feature of vit-base is 768
 preloading="no"
 patch_size="512"
 n_classes=2
-
+split_dir="/storage/Pathology/codes/EasyMIL/splits712/BCNB_ER_100"
+# split_dir="/home/gzr/tmp/splits_BCNB/BCNB_ER_100"
+# results_dir="/home/gzr/tmp/"$task
 
 for model in $model_names
 do
@@ -58,15 +60,15 @@ do
         echo $exp", GPU is:"${gpus[$model]}
         export CUDA_VISIBLE_DEVICES=${gpus[$model]}
         # k_start and k_end, only for resuming, default is -1
-        k_start=-1
-        k_end=-1
+        k_start=0
+        k_end=1
         nohup python main.py \
             --drop_out \
             --early_stopping \
             --n_classes $n_classes \
             --task_type subtyping \
             --lr 1e-4 \
-            --k 10 \
+            --k 1 \
             --k_start $k_start \
             --k_end $k_end \
             --label_frac 1.0 \
@@ -75,6 +77,7 @@ do
             --weighted_sample \
             --task $task \
             --backbone $backbone \
+            --split_dir $split_dir \
             --results_dir $results_dir \
             --model_type $model \
             --log_data \

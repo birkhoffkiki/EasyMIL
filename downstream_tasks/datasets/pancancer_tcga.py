@@ -35,13 +35,16 @@ class DataSet(Dataset):
             random.shuffle(v)
         
         final = []
+        _total = 0
         for k, v in temp_dict.items():
             length = int(len(v)*0.8)
+            _total += len(v)
+            print('{} ({})'.format(k, len(v)))
             if self.phase == 'train':
                 final.extend(v[:length])
             else:
                 final.extend(v[length:])
-                
+        print('Total images:', _total)
         return final
             
     def __len__(self):
@@ -55,3 +58,7 @@ class DataSet(Dataset):
         if self.transformer:
             img = self.transformer(img)
         return img, (index, torch.tensor(label))
+
+if __name__ == '__main__':
+    dataset = DataSet(phase='train')
+    print('Total:', len(dataset))

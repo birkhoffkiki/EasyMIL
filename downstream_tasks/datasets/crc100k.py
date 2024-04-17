@@ -37,7 +37,10 @@ class DataSet(Dataset):
     
     def __getitem__(self, index):
         path, label = self.data_items[index]
-        img = Image.open(path)
+        try:
+            img = Image.open(path).copy()
+        except:
+            print('failed to read:', path)
         if self.transformer:
             img = self.transformer(img)
         return img, (index, torch.tensor(label))

@@ -1,10 +1,10 @@
 
 # BRACS MIL scripts
 #model_names="wikg"
-model_names="DTFD"
+model_names="att_mil"
 # model_names="moe"
 
-backbones="dinov2_vitl"
+backbones="distill_87499"
 
 #  plip dinov2_vitl"
 # backbones="dinov2_vitl||ctranspath"
@@ -17,6 +17,7 @@ in_dim["phikon"]=768
 in_dim["dinov2_vitl"]=1024
 in_dim["plip"]=512
 in_dim["dinov2_vitl||ctranspath"]="1024||768"
+in_dim["distill_87499"]=1024
 
 declare -A gpus
 gpus["clam_sb"]=3

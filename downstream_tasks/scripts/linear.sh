@@ -1,20 +1,22 @@
 # tasks="PanCancer-TCGA"
 # tasks="PanCancer-TIL"
 # tasks="ESCA"
-# task="UniToPatho"
-# task="BACH"
+# tasks="UniToPatho"
+# tasks="BACH"
 # tasks="PCAM"
-tasks="WSSS4LUAD"
-# task="CCRCC-TCGA_HEL"
-# task="CRC-100K"
-# task="CRC-MSI"
+# tasks="WSSS4LUAD"
+tasks="CCRCC-TCGA_HEL"
+# tasks="CRC-100K"
+# tasks="CRC-MSI"
 
 # tasks="PanCancer-TCGA ESCA UniToPatho BACH CCRCC-TCGA_HEL CRC-100K CRC-MSI"
 
 # models="conch uni ctranspath resnet50 plip distill_87499 distill_99999 phikon distill_174999 distill_12499_cls_only"
-models="phikon"
+# models="distill_12499"
+models="dinov2_vitl"
+# models="distill_174999 distill_12499_cls_only"
 
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=1
 
 for task in $tasks
 do

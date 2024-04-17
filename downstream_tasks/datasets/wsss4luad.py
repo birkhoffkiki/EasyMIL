@@ -5,6 +5,7 @@ import torch
 import random
 import json
 
+
 class DataSet(Dataset):
     num_classes=9
     def __init__(self, root='/home/jmabq/data/WSSS4LUAD', phase='train', transformer=None) -> None:

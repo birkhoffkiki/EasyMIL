@@ -37,7 +37,7 @@ class DataSet(Dataset):
     
     def __getitem__(self, index):
         path, label = self.data_items[index]
-        img = Image.open(path)
+        img = Image.open(path).copy()
         if self.transformer:
             img = self.transformer(img)
         return img, (index, torch.tensor(label))
