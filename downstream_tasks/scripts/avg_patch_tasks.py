@@ -4,12 +4,16 @@ import numpy as np
 
 root = '/home/jmabq/data/results'
 
+
 models = ['resnet50', 'phikon', 'ctranspath', 'uni', 'conch', 'plip', 'distill_87499', 'distill_99999', 'distill_174999', 'distill_12499_cls_only',
-          'distill_137499_cls_only', 'distill_12499', 'dinov2_vitl']
+          'distill_137499_cls_only', 'distill_12499', 'dinov2_vitl', 'distill_379999_cls_only',
+          'distill_487499_cls_only']
+
 Keys = {'resnet50': 'ResNet50', 'ctranspath': 'Ctranspath', 'uni': 'UNI', 
         'conch': 'CONCH', 'plip': 'PLIP', 'distill_87499': 'DisFM-87499',
         'phikon': 'Phikon', 'distill_99999': 'DisFM-99999', 'distill_174999': 'DisFM-174999', 'distill_12499_cls_only':'DisFM-CLS-12499',
-        'distill_137499_cls_only': 'DisFM-CLS-137499', 'distill_12499': 'DisFM-12499', 'dinov2_vitl': 'dinov2_vitl'}
+        'distill_137499_cls_only': 'DisFM-CLS-137499', 'distill_12499': 'DisFM-12499', 'dinov2_vitl': 'dinov2_vitl',
+        'distill_379999_cls_only': 'DisFM-CLS-379999', 'distill_487499_cls_only': 'DisFM-CLS-487499'}
 
 
 def linear_metric(json_path):

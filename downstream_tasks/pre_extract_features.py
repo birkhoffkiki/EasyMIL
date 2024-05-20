@@ -34,16 +34,16 @@ def main(args, save_dir):
     path = os.path.join(save_dir, 'train.pt')
     if not os.path.exists(path):
         print('Extracting train features ...')
-        train_features, train_labels = extract_features(model, train_dataset, args.batch_size, 8, gather_on_cpu=True)
-        train_data = {'feature': train_features, 'label': train_labels}
+        train_features, train_labels, paths = extract_features(model, train_dataset, args.batch_size, 8, gather_on_cpu=True)
+        train_data = {'feature': train_features, 'label': train_labels, 'paths': paths}
         print('save:', path)
         torch.save(train_data, path)
     
     path = os.path.join(save_dir, 'val.pt')
     if not os.path.exists(path):
         print('Extracting val features ...')
-        val_features, val_labels = extract_features(model, val_dataset, args.batch_size, 8, gather_on_cpu=True)
-        val_data = {'feature': val_features, 'label': val_labels}
+        val_features, val_labels, paths = extract_features(model, val_dataset, args.batch_size, 8, gather_on_cpu=True)
+        val_data = {'feature': val_features, 'label': val_labels, 'paths': paths}
         print('save:', path)
         torch.save(val_data, path)
         
@@ -58,8 +58,8 @@ def main(args, save_dir):
             )        
             path = os.path.join(save_dir, 'test.pt')
             if not os.path.exists(path):
-                test_features, test_labels = extract_features(model, test_dataset, args.batch_size, 4, gather_on_cpu=True)
-                test_data = {'feature': test_features, 'label': test_labels}
+                test_features, test_labels, paths = extract_features(model, test_dataset, args.batch_size, 4, gather_on_cpu=True)
+                test_data = {'feature': test_features, 'label': test_labels, 'paths': paths}
                 print('save:', path)
                 torch.save(test_data, path)
 

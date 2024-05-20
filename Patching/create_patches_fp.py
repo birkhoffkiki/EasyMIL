@@ -94,7 +94,7 @@ def seg_and_patch(source, save_dir, patch_save_dir, mask_save_dir, stitch_save_d
 		df.to_csv(os.path.join(save_dir, 'process_list_autogen.csv'), index=False)
 		idx = process_stack.index[i]
 		slide = process_stack.loc[idx, 'slide_id']
-		print("\n\nprogress: {:.2f}, {}/{}".format(i/total, i, total))
+		print("\n\nprogress: {:.2f}, {}/{}".format(i/total, i, total), flush=True)
 		print('processing {}'.format(slide))
 		
 		df.loc[idx, 'process'] = 0

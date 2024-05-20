@@ -2,7 +2,7 @@
 # model_names="att_mil"
 model_names="att_mil"
 
-backbones="ctranspath"
+backbones="distill_87499"
 # backbones="resnet50 uni plip conch phikon"
 # backbones="dinov2_vitl resnet50 uni plip phikon"
 
@@ -17,7 +17,7 @@ in_dim["plip"]=512
 in_dim["phikon"]=768
 in_dim["uni"]=1024
 in_dim["conch"]=512
-
+in_dim["distill_87499"]=1024
 
 declare -A gpus
 gpus["clam_sb"]=7

@@ -85,17 +85,20 @@ def extract_features(model, dataset, batch_size, num_workers, gather_on_cpu=Fals
 def extract_features_with_dataloader(model, data_loader, gather_on_cpu=False):
     gather_device = torch.device("cpu") if gather_on_cpu else torch.device("cuda")
     features, all_labels = [], []
-    for index, (samples, (_, labels_rank)) in enumerate(data_loader):
+    image_paths = []
+    for index, (samples, (data_item_index, labels_rank)) in enumerate(data_loader):
         print('Extracting feature progresss:{}/{}'.format(index+1, len(data_loader)), flush=True)
         samples = samples.cuda()
         features_rank = model(samples)
 
         features.append(features_rank.to(gather_device))
         all_labels.append(labels_rank)
+        for ii in data_item_index:
+            image_paths.append(data_loader.dataset.get_img_path(ii))
 
     features = torch.cat(features, dim=0)
     all_labels = torch.cat(all_labels, dim=0)
     print(f"Features shape: {tuple(features.shape)}")
     print(f"Labels shape: {tuple(all_labels.shape)}")
     assert torch.all(all_labels > -1)
-    return features, all_labels
+    return features, all_labels, image_paths

@@ -2,11 +2,11 @@
 # save log
 prefix="/jhcnas3"
 # models="phikon"
-models="distill_87499"
+models="distill_379999_cls_only"
 skip_partial="no" # yes to skip partial file
 
 declare -A gpus
-gpus["dinov2_vitl16_split1"]=6
+gpus["distill_379999_cls_only"]=0
 gpus["distill_87499"]=4
 gpus["phikon"]=7
 gpus["plip"]=6
@@ -29,7 +29,7 @@ do
                 --data_h5_dir $DIR_TO_COORDS \
                 --csv_path $CSV_FILE_NAME \
                 --feat_dir $FEATURES_DIRECTORY \
-                --batch_size 128 \
+                --batch_size 32 \
                 --model $model \
                 --skip_partial $skip_partial > "extract_scripts/logs/BRACS_log_$model.log" 2>&1 &
 done

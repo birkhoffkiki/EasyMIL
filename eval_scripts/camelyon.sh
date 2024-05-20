@@ -1,7 +1,7 @@
 model_names="att_mil"
 # backbones="vit_base_patch16_224_21k"
 # backbones="resnet50 resnet101 vit_base_patch16_224_21k vit_large_patch16_224_21k"
-backbones="ctranspath dinov2_vitl plip resnet50"
+backbones="dinov2_vitl"
 # 
 declare -A in_dim
 in_dim["resnet50"]=1024
@@ -40,9 +40,11 @@ do
         echo "processing:"$exp
         model_exp_code=$task"/"$model"/"$backbone"_s1"  # default seed is 1  
         save_exp_code=$task"/"$model"/"$backbone"_s1_512"
-        python eval.py \
+        
+        #add --bootstrap to conduct bootstrap
+        python eval.py --bootstrap\
             --drop_out \
-            --k 10 \
+            --k 1 \
             --n_classes $n_classes \
             --task_type subtyping \
             --models_exp_code $model_exp_code \

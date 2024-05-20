@@ -1,26 +1,33 @@
-# save log
-dataset="TCGA__GBM"
-gpu=1
+# BRCA
+prefix="/jhcnas3"
+
+task="GBM"
+root_dir="extract_scripts/logs/"$task"_log_"
+use_cache="no"
+
+
+DIR_TO_COORDS=$prefix"/Pathology/Patches/TCGA__"$task
+DATA_DIRECTORY=$prefix"/Pathology/original_data/TCGA/GBM/slides"
+CSV_FILE_NAME="dataset_csv/temporty_csv/TCGA__GBM.csv"
+FEATURES_DIRECTORY=$prefix"/Pathology/Patches/TCGA__GBM"
+
 ext=".svs"
-DATA_DIRECTORY="/jhcnas3/Pathology/original_data/TCGA/GBM/slides"
+save_storage="yes"
+
+models="conch distill_87499"
+
+declare -A gpus
+gpus["conch"]=7
+gpus['distill_87499']=7
 
 
-#---------------------------------------
-root_dir="/storage/Pathology/codes/CLAM/extract_scripts/"
-ramdisk_cache="/home/gzr/"$dataset
-models="dinov2_vitl"
-gpus["dinov2_vitl"]=$gpu
+datatype="tcga" # extra path process for TCGA dataset, direct mode do not care use extra path
+
 for model in $models
 do
-        DIR_TO_COORDS="/storage/Pathology/Patches/"$dataset
-        CSV_FILE_NAME="/storage/Pathology/codes/CLAM/dataset_csv/temporty_csv/"$dataset".csv"
-        FEATURES_DIRECTORY="/storage/Pathology/Patches/"$dataset
-        save_storage="yes"
-        datatype="auto" # extra path process for TCGA dataset, direct mode do not care use extra path
-
         echo $model", GPU is:"${gpus[$model]}
         export CUDA_VISIBLE_DEVICES=${gpus[$model]}
-        cache_root=$ramdisk_cache"/"$model
+
         nohup python3 extract_features_fp_fast.py \
                 --data_h5_dir $DIR_TO_COORDS \
                 --data_slide_dir $DATA_DIRECTORY \
@@ -28,8 +35,9 @@ do
                 --feat_dir $FEATURES_DIRECTORY \
                 --batch_size 64 \
                 --model $model \
+                --use_cache $use_cache \
                 --datatype $datatype \
                 --slide_ext $ext \
-                --save_storage $save_storage \
-                --ramdisk_cache $cache_root > $root_dir"/logs/"$dataset"_"$model".txt" 2>&1 &
+                --save_storage $save_storage > $root_dir"$model.log" 2>&1 &
+
 done

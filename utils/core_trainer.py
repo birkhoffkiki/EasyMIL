@@ -49,6 +49,7 @@ class TrainEngine:
         self.device=torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         
         save_splits(datasets, ['train', 'val', 'test'], os.path.join(self.result_dir, 'splits_{}.csv'.format(fold)))
+        
         # init logger
         self.init_logger()
 

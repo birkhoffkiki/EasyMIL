@@ -47,7 +47,10 @@ def make_dataset(
         from downstream_tasks.datasets.wsss4luad import DataSet
     elif dataset_name.lower() == 'breakhis': 
         from downstream_tasks.datasets.breakhis import DataSet
-        
+    elif dataset_name.lower() == 'chaoyang': 
+        from downstream_tasks.datasets.chaoyang import DataSet
+    elif dataset_name.lower() == 'lysto': 
+        from downstream_tasks.datasets.lysto import DataSet
     else:
         raise NotImplementedError(f'{dataset_name}')
     

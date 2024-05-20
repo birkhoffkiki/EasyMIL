@@ -56,3 +56,14 @@ class DataSet(Dataset):
         if self.transformer:
             img = self.transformer(img)
         return img, (index, torch.tensor(label))
+    
+    def __repr__(self) -> str:
+        print(self.cls_names)
+        result_dict = {v: 0 for k, v in self.cls_names.items()}
+        for _, label in self.data_items:
+            result_dict[label] += 1
+        return '{}'.format(result_dict)
+
+if __name__ == '__main__':
+    da = DataSet(phase='val')
+    print(da)

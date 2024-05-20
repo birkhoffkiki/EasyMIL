@@ -1,7 +1,7 @@
 
 # model_names="max_mil mean_mil att_mil trans_mil ds_mil dtfd"
-model_names="att_mil"
-backbones="dinov2_vitl dinov2_vitl16_split1"
+model_names="256_hat_encoder_512_512"
+backbones="resnet50"
 
 
 declare -A in_dim
@@ -19,28 +19,28 @@ gpus["clam_sb"]=7
 gpus["clam_mb"]=4
 gpus["mean_mil"]=6
 gpus["max_mil"]=6
-gpus["att_mil"]=7
+gpus["att_mil"]=6
 gpus['trans_mil']=7
 gpus['ds_mil']=6
 gpus['dtfd']=6
-gpus['hat_encoder_256_32']=4 #√
-gpus['hat_encoder_512_512']=7 #√
-gpus['hat_encoder_256_256']=4 #√
-gpus['96_hat_encoder_512_512']=4 #√
-gpus['512_hat_encoder_512_512']=6 #√
-gpus['128_hat_encoder_512_512']=4 #√
+gpus['hat_encoder_256_32']=1 #√
+gpus['hat_encoder_512_512']=1 #√
+gpus['hat_encoder_256_256']=3 #√
+gpus['96_hat_encoder_512_512']=2 #√ 
+gpus['512_hat_encoder_512_512']=0 #√
+gpus['128_hat_encoder_512_512']=1 #√
 gpus['64_hat_encoder_512_512']=5 #√
-gpus['256_hat_encoder_512_512']=5 #√ 
-gpus['96_hat_encoder_512_512_nomem']=7 #√
-gpus['hat_encoder_256_32_nomem']=6 #√ 
+gpus['256_hat_encoder_512_512']=2 #v 
+gpus['96_hat_encoder_512_512_nomem']=7
+gpus['hat_encoder_256_32_nomem']=6 
 gpus["moe"]=3
 
 
 
 root_log="/storage/Pathology/codes/EasyMIL/train_scripts/logs/train_log_TUPAC16_"
 task="TUPAC16"
-results_dir="/jhcnas3/Pathology/experiments/train/"$task
-# results_dir="/storage/Pathology/results/experiments/train/"$task
+# results_dir="/jhcnas3/Pathology/experiments/train/"$task
+results_dir="/storage/Pathology/results/experiments/train/"$task
 model_size="small" # since the dim of feature of vit-base is 768    
 preloading="no"
 patch_size="512"

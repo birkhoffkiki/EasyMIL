@@ -34,7 +34,11 @@ def mean_std(path):
 
 def mean_std_survival(path):
     df = pd.read_csv(path)
-    auc = np.array(df['test_cindex'])
+    try:
+        auc = np.array(df['test_cindex'])
+    except:
+        auc = np.array(df['test_c_index'])
+        
     
     auc_mean = np.mean(auc)
     auc_std = np.std(auc)

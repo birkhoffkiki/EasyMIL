@@ -9,18 +9,14 @@ if __name__ == '__main__':
     handle = open(save_path, 'w')
     handle.write('dir,case_id,slide_id,label\n')
     classes = os.listdir(root)
-    classes = [i for i in classes if os.path.isdir(os.path.join(root, i))]
-    all_labels = []
+    items = [i for i in classes if os.path.isdir(os.path.join(root, i))]
+    
     for item in items:
-        k = item.split(',')
-
-        slide_id = k[0]
-        if os.path.exists(os.path.join('/storage/Pathology/Patches/UBC-OCEAN/patches', f'{slide_id}.h5')):
-            label = k[1]
-            all_labels.append(label)
-            line = '{},{},{},{}\n'.format(v,slide_id, slide_id, label)
+        dir = os.path.join(root, item)
+        names = os.listdir(dir)
+        for name in names:
+            slide_id = name.split('.')[0]
+            line = '{},{},{},{}\n'.format('/storage/Pathology/Patches/RCC-DHMC',slide_id, slide_id, item)
             handle.write(line)
     handle.close()
-    
-    print('label num:', len(set(all_labels)))
-    print(set(all_labels))
+    print('Done')

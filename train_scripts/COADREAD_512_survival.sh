@@ -1,7 +1,8 @@
 model_names='att_mil'
 # model_names='moe_a2o'
 # backbones="dinov2_vitl||ctranspath"
-backbones="phikon"
+# backbones="phikon"
+backbones="phikon plip uni conch distill_87499"
 
 declare -A in_dim
 in_dim["resnet50"]=1024
@@ -11,22 +12,26 @@ in_dim["dinov2_vitl"]=1024
 in_dim["ctranspath"]=768
 in_dim["phikon"]=768
 in_dim["dinov2_vitl||ctranspath"]="1024||768"
+in_dim["uni"]=1024
+in_dim["conch"]=512
+in_dim["distill_87499"]=1024
 declare -A gpus
 # gpus["clam_sb"]=0
 # gpus["clam_mb"]=1
 gpus["mean_mil"]=0
 gpus["max_mil"]=0
-gpus["att_mil"]=0
+gpus["att_mil"]=6
 gpus["moe"]=4
 gpus['moe_a2o']=7
 gpus['dtfd']=0
 # gpus["trans_mil"]=3
 
-data_root_dir="/storage/Pathology/Patches/TCGA__COADREAD"
+# data_root_dir="/storage/Pathology/Patches/TCGA__COADREAD"
+data_root_dir="/jhcnas3/Pathology/Patches/TCGA__COADREAD"
 root_log="/storage/Pathology/codes/EasyMIL/train_scripts/logs/train_log_COADREAD_survival_"
 task="TCGA_COADREAD_survival"
-results_dir="/jhcnas3/Pathology/experiments/train/"$task
-# results_dir="/storage/Pathology/results/experiments/train/"$task
+# results_dir="/jhcnas3/Pathology/experiments/train/"$task
+results_dir="/storage/Pathology/results/experiments/train/"$task
 model_size="small" # since the dim of feature of vit-base is 768    
 preloading="no"
 patch_size="512"

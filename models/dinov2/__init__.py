@@ -30,7 +30,7 @@ def build_model(device, gpu_num, model_name, ckpt_path):
         teacher = vits.__dict__['vit_large'](**vit_kwargs)
         
     elif model_name in ['distill_87499', 'distill_99999', 'distill_174999', 'distill_12499_cls_only', 'distill_137499_cls_only',
-                        'distill_12499']:
+                        'distill_12499', 'distill_379999_cls_only', 'distill_487499_cls_only']:
         vit_kwargs = dict(
             img_size=224,
             patch_size=14,

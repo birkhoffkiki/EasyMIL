@@ -11,7 +11,7 @@ root_dir="/storage/Pathology/codes/EasyMIL/extract_scripts/"
 # ramdisk_cache="/mnt/ramdisk/"$dataset
 ramdisk_cache="/home/gzr/tmp/"$dataset
 # models="resnet50 uni phikon plip" #dinov2_vitl is saved on /storage!!!
-models="ctranspath"
+models="distill_87499"
 # models="conch"
 declare -A gpus
 gpus["dinov2_vitl"]=1
@@ -21,6 +21,7 @@ gpus["phikon"]=2
 gpus["plip"]=2
 gpus["conch"]=6
 gpus["ctranspath"]=7
+gpus['distill_87499']=3
 for model in $models
 do
         # DIR_TO_COORDS="/storage/Pathology/Patches/"$dataset
@@ -39,7 +40,7 @@ do
                 --data_slide_dir $DATA_DIRECTORY \
                 --csv_path $CSV_FILE_NAME \
                 --feat_dir $FEATURES_DIRECTORY \
-                --batch_size 32 \
+                --batch_size 128 \
                 --model $model \
                 --datatype $datatype \
                 --slide_ext $ext \

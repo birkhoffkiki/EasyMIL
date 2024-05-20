@@ -74,7 +74,7 @@ class HATLayer(nn.Module):
         self.d_ff = d_ff
         
         self.global_token = nn.Parameter(torch.randn(1, 1, self.d_model))
-        self.region_position_embeddings = PositionalEncoding(self.d_model, self.dropout, max_len = 10000)
+        self.region_position_embeddings = PositionalEncoding(self.d_model, self.dropout, max_len = 100000)
         
         self.use_region_encoder = use_region_encoder
         self.use_WSI_encoder = use_WSI_encoder

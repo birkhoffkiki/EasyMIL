@@ -30,6 +30,8 @@ __implemented_models = {
     'distill_174999':'models/ckpts/distill_174999.pth',
     'distill_12499_cls_only':'models/ckpts/distill_12499_cls_only.pth',
     'distill_137499_cls_only': 'models/ckpts/distill_137499_cls_only.pth',
+    'distill_379999_cls_only': 'models/ckpts/distill_349999_cls_only.pth',
+    'distill_487499_cls_only': 'models/ckpts/distill_487499_cls_only.pth',
     'phikon': 'sota'
 }
 
@@ -89,7 +91,8 @@ def get_model(model_name, device, gpu_num):
         model = mae_pretrained_model(device, gpu_num, 'mae_vit_huge_patch14',ckpt=__implemented_models[model_name] ,input_size=224)
 
     elif model_name in ['dinov2_vitl', 'dinov2_vitl16_split1', 'dinov2_vitl14_split1', 'distill_87499', 'distill_99999',
-                        'distill_174999', 'distill_12499_cls_only', 'distill_137499_cls_only', 'distill_12499']:
+                        'distill_174999', 'distill_12499_cls_only', 'distill_137499_cls_only', 'distill_12499',
+                        'distill_379999_cls_only', 'distill_487499_cls_only']:
         from models.dinov2 import build_model
         model, _ = build_model(device, gpu_num, model_name, __implemented_models[model_name])
 
@@ -181,7 +184,8 @@ def get_custom_transformer(model_name):
         custom_trans = tt.Lambda(lambda x: torch.from_numpy(np.array(x)))
     
     elif model_name in ['dinov2_vitl', 'dinov2_vitl16_split1', 'dinov2_vitl14_split1', 'distill_87499', 'distill_99999',
-                        'distill_174999', 'distill_12499_cls_only', 'distill_137499_cls_only', 'distill_12499']:
+                        'distill_174999', 'distill_12499_cls_only', 'distill_137499_cls_only', 'distill_12499', 
+                        'distill_379999_cls_only', 'distill_487499_cls_only']:
         from models.dinov2 import build_transform
         custom_trans = build_transform()
         

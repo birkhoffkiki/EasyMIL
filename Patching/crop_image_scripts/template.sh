@@ -1,11 +1,11 @@
 # template
 # configuration
-dataset="DiagSet"
-wsi_root="/jhcnas3/Pathology/original_data/DiagSet"
-wsi_format="ndpi"
+dataset="TCGA__LUAD"
+wsi_root="/jhcnas3/Pathology/original_data/TCGA/LUAD/slides"
+wsi_format="svs"
 
 
-log_path="./crop_image_scripts/"$dataset".log"
+log_path="crop_image_scripts/"$dataset".log"
 root="/storage/Pathology/Patches/"$dataset
 datatype="auto"
 level=0

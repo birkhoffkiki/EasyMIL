@@ -4,13 +4,13 @@ prefix="/jhcnas3"
 
 
 # models="phikon"
-models="distill_87499"
+models="distill_379999_cls_only"
 skip_partial="no" # yes to skip partial file
 
-tasks="LUSC LUAD"
+tasks="LUSC"
 declare -A gpus
 gpus["dinov2_vitl"]=0
-gpus["dinov2_vitl16_split1"]=4
+gpus["distill_379999_cls_only"]=0
 gpus["distill_87499"]=0
 gpus["phikon"]=6
 gpus["plip"]=2
@@ -32,7 +32,7 @@ do
                         --data_h5_dir $DIR_TO_COORDS \
                         --csv_path $CSV_FILE_NAME \
                         --feat_dir $FEATURES_DIRECTORY \
-                        --batch_size 128 \
+                        --batch_size 32 \
                         --model $model \
                         --skip_partial $skip_partial > "extract_scripts/logs/"$task"_log_$model.log" 2>&1 &
         done

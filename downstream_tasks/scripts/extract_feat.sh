@@ -4,36 +4,38 @@
 # tasks="UniToPatho"
 # tasks="BACH"
 # tasks="CCRCC-TCGA_HEL"
-# tasks="CRC-100K"
+tasks="CRC-100K"
+# tasks="LYSTO"
 # tasks="ESCA"
 # tasks="WSSS4LUAD"
 # tasks="CRC-MSI"
 # tasks="CRC-MSI"
-tasks="BreakHis"
+# tasks="BreakHis"
+# tasks="chaoyang"
 
-# tasks="PanCancer-TCGA ESCA UniToPatho BACH CCRCC-TCGA_HEL CRC-100K CRC-MSI WSSS4LUAD PanCancer-TIL PCAM"
-# tasks_w_tests="PanCancer-TIL PCAM"
+# tasks="PanCancer-TCGA ESCA UniToPatho BACH CCRCC-TCGA_HEL CRC-100K CRC-MSI WSSS4LUAD PanCancer-TIL PCAM BreakHis chaoyang"
+# tasks="UniToPatho PanCancer-TIL"
 
-# models="distill_12499_cls_only distill_174999"
-# models="distill_12499"
 
 export PYTHONPATH="${PYTHONPATH}:/storage/Pathology/codes/EasyMIL"
-# models="distill_99999 uni resnet50 plip phikon distill_87499 distill_174999 distill_12499_cls_only"
-models="conch"
-# models="distill_12499"
-# models="dinov2_vitl"
+# models="distill_87499 resnet50 uni"
+# models="plip phikon conch"
+models="ctranspath"
+
 
 declare -A gpus
-gpus["PanCancer-TCGA"]=2
-gpus["PanCancer-TIL"]=6
-gpus["ESCA"]=4
-gpus["UniToPatho"]=5
+gpus["chaoyang"]=4
+gpus["LYSTO"]=6
+gpus["PanCancer-TCGA"]=1
+gpus["PanCancer-TIL"]=4
+gpus["ESCA"]=3
+gpus["UniToPatho"]=3
 gpus["BACH"]=6
-gpus["BreakHis"]=6
-gpus["CCRCC-TCGA_HEL"]=7
-gpus["CRC-100K"]=5
-gpus["CRC-MSI"]=2
-gpus["WSSS4LUAD"]=7
+gpus["BreakHis"]=4
+gpus["CCRCC-TCGA_HEL"]=6
+gpus["CRC-100K"]=1
+gpus["CRC-MSI"]=1
+gpus["WSSS4LUAD"]=4
 gpus["PCAM"]=6
 
 

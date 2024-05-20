@@ -44,3 +44,14 @@ class DataSet(Dataset):
         if self.transformer:
             img = self.transformer(img)
         return img, (index, torch.tensor(label))
+
+
+if __name__ == "__main__":
+    import json
+    dataset = DataSet(phase='val')
+    with open('/home/jmabq/data/CRC-100K/val_order.json', 'w') as f:
+        json.dump(dataset.data_items, f)
+
+    dataset = DataSet(phase='train')
+    with open('/home/jmabq/data/CRC-100K/train_order.json', 'w') as f:
+        json.dump(dataset.data_items, f)

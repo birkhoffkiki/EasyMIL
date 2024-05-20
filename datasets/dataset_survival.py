@@ -388,6 +388,7 @@ class Generic_MIL_Survival_Dataset(Generic_WSI_Survival_Dataset):
             img_root = os.path.join(data_dir, 'images', slide_id)
             coords_path = os.path.join(data_dir, 'patches', '{}.h5'.format(slide_id))
             
+            # ----image caller, not necessary for most MIL models
             try:
                 with h5py.File(coords_path, 'r') as f:
                     coords = f['coords'][:]
@@ -402,22 +403,37 @@ class Generic_MIL_Survival_Dataset(Generic_WSI_Survival_Dataset):
                     img = Image.open(path).convert('RGB')
                     img_list.append(img)
                 return img_list
+            # ------------------------------------------
 
+            def case_slide_reader(slide_id, backbone):
+                print(slide_id)
+                feature_list = []
+                for sid in slide_id.split(';'):
+                    if '.pt' in sid:
+                        # fengtao style csv
+                        sid = os.path.split(sid)[-1]
+                        sid = sid.split('.pt')[0]
+                        
+                    full_path = os.path.join(data_dir, 'pt_files', backbone, '{}.pt'.format(sid))
+                    try:
+                        feature = torch.load(full_path)
+                    except:
+                        raise RuntimeError(f'failed to load {full_path}')
+                    
+                    feature_list.append(feature)
+                print('slides #:', len(feature_list))
+                return torch.cat(feature_list, dim=0) 
+                    
             # to load feature extracted by different foundation models
             if '||' in self.backbone:
                 backbones = self.backbone.split('||')
                 features = []
                 for backbone in backbones:
-                    full_path = os.path.join(data_dir, 'pt_files', backbone, '{}.pt'.format(slide_id))
-                    feature = torch.load(full_path)
+                    feature = case_slide_reader(slide_id, backbone)
                     features.append(feature)
                     
             else:
-                full_path = os.path.join(data_dir, 'pt_files', self.backbone, '{}.pt'.format(slide_id))
-                try:
-                    features = torch.load(full_path)
-                except:
-                    raise RuntimeError('failed to load:{}'.format(full_path))
+                features = case_slide_reader(slide_id, self.backbone)
                 
             label = torch.LongTensor([label])
             output = {

@@ -3,12 +3,11 @@
 prefix="/jhcnas3"
 
 root_dir="extract_scripts/logs/"
-ramdisk_cache="/mnt/ramdisk/BRCA"
 use_cache="no"
-mkdir $ramdisk_cache
+# mkdir $ramdisk_cache
 
 # models="phikon"
-models="distill_87499"
+models="distill_379999_cls_only"
 
 tasks="BRCA"
 declare -A gpus
@@ -20,7 +19,8 @@ gpus["plip"]=2
 gpus["uni"]=1
 gpus["conch"]=0
 gpus["distill_87499"]=0
-
+gpus["distill_99999"]=0
+gpus["distill_379999_cls_only"]=0
 
 for model in $models
 do
@@ -47,7 +47,6 @@ do
                         --model $model \
                         --datatype $datatype \
                         --slide_ext $ext \
-                        --save_storage $save_storage \
-                        --ramdisk_cache $ramdisk_cache > $root_dir$task"_log_$model.log" 2>&1 &
+                        --save_storage $save_storage > $root_dir$task"_log_$model.log" 2>&1 &
         done
 done

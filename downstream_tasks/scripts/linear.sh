@@ -5,24 +5,26 @@
 # tasks="BACH"
 # tasks="PCAM"
 # tasks="WSSS4LUAD"
-tasks="CCRCC-TCGA_HEL"
+# tasks="CCRCC-TCGA_HEL"
 # tasks="CRC-100K"
 # tasks="CRC-MSI"
+# tasks="BreakHis"
+# tasks="chaoyang"
+tasks="LYSTO"
 
 # tasks="PanCancer-TCGA ESCA UniToPatho BACH CCRCC-TCGA_HEL CRC-100K CRC-MSI"
 
-# models="conch uni ctranspath resnet50 plip distill_87499 distill_99999 phikon distill_174999 distill_12499_cls_only"
-# models="distill_12499"
-models="dinov2_vitl"
-# models="distill_174999 distill_12499_cls_only"
+# models="conch uni ctranspath resnet50 plip distill_87499 distill_99999 phikon distill_174999 distill_12499_cls_only distill_12499 distill_137499_cls_only dinov2_vitl"
+# models="distill_137499_cls_only"
+models="distill_379999_cls_only"
+# models="dinov2_vitl"
 
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=6
 
 for task in $tasks
 do
     output_dir="/home/jmabq/data/results"
     data_root="/home/jmabq/data/"$task"/features"
-
 
     export PYTHONPATH="${PYTHONPATH}:./"
 

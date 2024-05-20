@@ -12,6 +12,9 @@ class DatasetWithEnumeratedTargets(Dataset):
     def __init__(self, dataset):
         self._dataset = dataset
 
+    def get_img_path(self, index):
+        return self._dataset.data_items[index]
+    
     def get_image_data(self, index: int) -> bytes:
         return self._dataset[index][0]
 

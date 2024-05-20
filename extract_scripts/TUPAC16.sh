@@ -6,9 +6,7 @@ data_prefix="/jhcnas3/Pathology/"
 
 #---------------------------------------
 root_dir="extract_scripts/"
-ramdisk_cache="/mnt/ramdisk/"$dataset
-# models="dinov2_vitl14_split1"
-models="distill_87499"
+models="distill_379999"
 
 declare -A gpus
 gpus["dinov2_vitl"]=6
@@ -16,7 +14,7 @@ gpus["phikon"]=1
 gpus["uni"]=1
 gpus["conch"]=1
 gpus["plip"]=4
-gpus["dinov2_vitl16_split1"]=2
+gpus["distill_379999"]=2
 gpus["distill_87499"]=4
 gpus["ctranspath"]=4
 gpus["resnet50"]=7
@@ -38,11 +36,11 @@ do
                 --data_slide_dir $DATA_DIRECTORY \
                 --csv_path $CSV_FILE_NAME \
                 --feat_dir $FEATURES_DIRECTORY \
+                --use_cache "no" \
                 --batch_size 32 \
                 --model $model \
                 --use_cache $use_cache \
                 --datatype $datatype \
                 --slide_ext $ext \
-                --save_storage $save_storage \
-                --ramdisk_cache $cache_root > $root_dir"/logs/"$dataset"_"$model".log" 2>&1 &
+                --save_storage $save_storage > $root_dir"/logs/"$dataset"_"$model".log" 2>&1 &
 done

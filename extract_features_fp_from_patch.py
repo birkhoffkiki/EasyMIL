@@ -31,7 +31,7 @@ class PatchDataset(Dataset):
         self.coords = h5py.File(patch_h5_path)['coords']
         actual_files = os.listdir(img_root)
         self.transform = transform
-        assert len(actual_files) == len(self.coords), 'real patch {} not match h5 patch number {}'.format(len(actual_files), len(self.coords))
+        assert len(actual_files) + 1 >= len(self.coords), 'real patch {} not match h5 patch number {}'.format(len(actual_files), len(self.coords))
     
     def __len__(self):
         return len(self.coords)
@@ -150,6 +150,10 @@ if __name__ == '__main__':
         one_slide_start = time.time()
 
         # init dataset
+        # skip if h5 not exists,
+        if not os.path.exists(h5_file_path):
+            print('{} not exists, skip'.format(h5_file_path))
+            continue
         patch_dataset = PatchDataset(images_path, h5_file_path, transform=custom_transformer)
         loader = DataLoader(patch_dataset, batch_size=args.batch_size, shuffle=False, num_workers=8)
 

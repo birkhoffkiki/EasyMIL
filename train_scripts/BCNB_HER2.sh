@@ -1,6 +1,6 @@
 model_names="att_mil"
 
-backbones="ctranspath"
+backbones="distill_87499"
 # model_names="att_mil"
 
 # backbones="resnet50 uni plip conch phikon"
@@ -17,6 +17,7 @@ in_dim["plip"]=512
 in_dim["phikon"]=768
 in_dim["uni"]=1024
 in_dim["conch"]=512
+in_dim["distill_87499"]=1024
 
 
 declare -A gpus

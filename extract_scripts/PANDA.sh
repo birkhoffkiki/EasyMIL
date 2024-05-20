@@ -2,7 +2,7 @@
 # save log
 prefix="/jhcnas3"
 skip_partial="no" # yes to skip partial file
-models="distill_87499"
+models="distill_379999_cls_only"
 
 declare -A gpus
 gpus["phikon"]=6
@@ -11,7 +11,7 @@ gpus["conch"]=5
 gpus["ctranspath"]=2
 gpus["resnet50"]=7
 gpus["distill_87499"]=4
-gpus["dinov2_vitl"]=5
+gpus["distill_379999_cls_only"]=1
 
 
 for model in $models

@@ -1,23 +1,25 @@
 # BRCA
-task="BLCA"
-root_dir="/storage/Pathology/codes/CLAM/extract_scripts/logs/"$task"_log_"
-ramdisk_cache="/home/gzr/tmp/blca"
+prefix="/jhcnas3"
 
-DIR_TO_COORDS="/storage/Pathology/Patches/TCGA__BLCA"
-DATA_DIRECTORY="/jhcnas3/Pathology/original_data/TCGA/BLCA/slides"
-CSV_FILE_NAME="/storage/Pathology/codes/CLAM/dataset_csv/BLCA.csv"
-FEATURES_DIRECTORY="/storage/Pathology/Patches/TCGA__BLCA"
+task="BLCA"
+root_dir="extract_scripts/logs/"$task"_log_"
+use_cache="no"
+
+
+DIR_TO_COORDS=$prefix"/Pathology/Patches/TCGA__BLCA"
+DATA_DIRECTORY=$prefix"/Pathology/original_data/TCGA/BLCA/slides"
+CSV_FILE_NAME="dataset_csv/BLCA.csv"
+FEATURES_DIRECTORY=$prefix"/Pathology/Patches/TCGA__BLCA"
+
 ext=".svs"
 save_storage="yes"
 
-models="dinov2_vitl"
+
+models="conch distill_87499"
 
 declare -A gpus
-gpus["mae_vit_l_1000slides_19epoch"]=0
-gpus['ctranspath']=0
-gpus['mae_vit_huge_patch14_1000slides_22epoch']=7
-gpus["dinov2_vitl"]=0
-
+gpus["conch"]=7
+gpus['distill_87499']=4
 
 datatype="tcga" # extra path process for TCGA dataset, direct mode do not care use extra path
 
@@ -34,9 +36,9 @@ do
                 --feat_dir $FEATURES_DIRECTORY \
                 --batch_size 64 \
                 --model $model \
+                --use_cache $use_cache \
                 --datatype $datatype \
                 --slide_ext $ext \
-                --save_storage $save_storage \
-                --ramdisk_cache $ramdisk_cache > $root_dir"$model.txt" 2>&1 &
+                --save_storage $save_storage > $root_dir"$model.log" 2>&1 &
 
 done

@@ -3,18 +3,13 @@
 
 prefix="/jhcnas3"
 skip_partial="no" # yes to skip partial file
-models="distill_87499"
-tasks="KIRC"
-# tasks="KICH KIRP KIRC"
+models="distill_379999_cls_only"
+# tasks="KIRC"
+tasks="KICH"
 
-# model="mae_vit_large_patch16"
-# model="vit_large_patch16_224_21k"
-# model="vit_base_patch16_224_21k"
-# model="resnet101"
-# model="resnet50"
 declare -A gpus
 gpus["dinov2_vitl"]=0
-gpus["dinov2_vitl16_split1"]=4
+gpus["distill_379999_cls_only"]=7
 gpus["distill_87499"]=7
 gpus["phikon"]=6
 gpus["plip"]=2
@@ -37,7 +32,7 @@ do
                         --data_h5_dir $DIR_TO_COORDS \
                         --csv_path $CSV_FILE_NAME \
                         --feat_dir $FEATURES_DIRECTORY \
-                        --batch_size 128 \
+                        --batch_size 64 \
                         --model $model \
                         --skip_partial $skip_partial > "extract_scripts/logs/"$task"_log_$model.log" 2>&1 &
         done

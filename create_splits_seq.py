@@ -1,6 +1,8 @@
 import os
 from datasets.dataset_generic import Generic_WSI_Classification_Dataset, Generic_MIL_Dataset, save_splits
 from datasets.dataset_survival import Generic_WSI_Survival_Dataset, Generic_MIL_Survival_Dataset
+from datasets import get_survival_dataset, get_subtying_dataset
+
 import argparse
 import numpy as np
 
@@ -25,213 +27,14 @@ parser.add_argument('--apply_sigfeats',  action='store_true', default=False, hel
 
 args = parser.parse_args()
 
-if args.task == 'LUAD_LUSC':
-    args.n_classes=2
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/LUAD_LUSC.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'LUAD':0, 'LUSC':1},
-                            patient_strat=False,
-                            ignore=[])
-                            
-elif args.task == 'camelyon':
-    args.n_classes=2
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/camelyon.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'normal':0, 'tumor':1},
-                            patient_strat= False,
-                            ignore=[])
-    
-elif args.task == 'RCC':
-    args.n_classes=3
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/RCC.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'KICH':0, 'KIRP':1, 'KIRC':2},
-                            patient_strat= False,
-                            ignore=[])
-
-elif 'survival' in args.task:
-    args.n_classes = 4
-    # study = '_'.join(args.task.split('_')[:2])
-    # if study == 'tcga_kirc' or study == 'tcga_kirp':
-    #     combined_study = 'tcga_kidney'
-    # elif study == 'tcga_luad' or study == 'tcga_lusc':
-    #     combined_study = 'tcga_lung'
-    # else:
-    #     combined_study = study
-    study = args.task.split('_')[1]
-    # study_dir = '%s_20x_features' % combined_study
-    # study_dir = 'pt_files/%s' % args.backbone
-    dataset = Generic_MIL_Survival_Dataset(csv_path = 'dataset_csv/%s_processed.csv' % study,
-                                            mode = args.mode,
-                                            apply_sig = args.apply_sig,
-                                            data_dir= None,
-                                            shuffle = False, 
-                                            seed = args.seed, 
-                                            print_info = True,
-                                            patient_strat= False,
-                                            n_bins=4,
-                                            label_col = 'survival_months',
-                                            ignore=[])
-elif args.task == 'PANDA':
-    args.n_classes=6
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/PANDA.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'0':0, '1':1, '2':2, '3':3, '4': 4, '5':5},
-                            patient_strat=False,
-                            ignore=[])
-
-
-elif args.task == 'BRACS':
-    args.n_classes=7
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/BRACS.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'PB':0, 'UDH':1, 'IC':2, 'FEA':3, 
-                                          'DCIS': 4, 'N':5, 'ADH': 6},
-                            patient_strat=False,
-                            ignore=[])
-    
-elif args.task == 'LUAD_LUSC_STAD':
-    args.n_classes=3
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/LUAD_LUSC_STAD.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'LUAD':0, 'LUSC':1, 'STAD':2 },
-                            patient_strat=False,
-                            ignore=[])
-    
-elif args.task == 'TCGA_COAD_READ_molecular_subtyping':
+if 'survival' in args.task:
     args.n_classes=4
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/COAD_READ_molecular_subtyping.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'CMS1':0, 'CMS2':1, 'CMS3':2, 'CMS4':3},
-                            patient_strat=False,
-                            ignore=[])
-
-elif args.task == 'TCGA_BRCA_subtyping':
-    args.n_classes=2
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/BRCA_subtyping.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'ILC':0, 'IDC':1},
-                            patient_strat=False,
-                            ignore=[])
-
-elif args.task == 'TCGA_BRCA_molecular_subtyping':
-    args.n_classes=5
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/BRCA_molecular_subtyping.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'Normal':0, 'LumA':1, 'LumB':2, 'Basal':3, 'Her2':4},
-                            patient_strat=False,
-                            ignore=[])
-
-elif args.task == 'UBC-OCEAN':
-    args.n_classes=5
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/UBC-OCEAN.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'CC': 0, 'HGSC': 1, 'LGSC': 2, 'EC': 3, 'MC': 4},
-                            patient_strat=False,
-                            ignore=[])
-
-elif args.task == 'CPTAC_LUAD_LSCC':
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/CPTAC_LUAD_LSCC.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'LUAD':0, 'LSCC':1},
-                            patient_strat=False,
-                            ignore=[])
-
-elif args.task == 'CPTAC_LUAD_LSCC_Normal':
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/CPTAC_LUAD_LSCC_Normal.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'luad':0, 'lscc':1, 'normal':2},
-                            patient_strat=False,
-                            ignore=[])
-    
-elif args.task == 'TUPAC16':
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/TUPAC16.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'subtype_1':0, 'subtype_2':1, 'subtype_3':2},
-                            patient_strat=False,
-                            ignore=[])
-    
-elif args.task == "TCGA_GBMLGG_IDH1":
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/GBMLGG_IDH1.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'0':0, '1':1},
-                            patient_strat=False,
-                            ignore=[])
-    
-elif args.task == "BCNB_ER":
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/BCNB_ER.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'Negative':0, 'Positive':1},
-                            patient_strat=False,
-                            ignore=[])
-    
-elif args.task == "BCNB_PR":
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/BCNB_PR.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'Negative':0, 'Positive':1},
-                            patient_strat=False,
-                            ignore=[])
-
-elif args.task == "BCNB_HER2":
-    dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/BCNB_HER2.csv',
-                            data_dir= None,
-                            shuffle = False, 
-                            seed = args.seed, 
-                            print_info = True,
-                            label_dict = {'Negative':0, 'Positive':1},
-                            patient_strat=False,
-                            ignore=[])
-
+    dataset = get_survival_dataset(args.task)
 else:
-    raise NotImplementedError
+    dataset = get_subtying_dataset(args.task)
+    args.n_classes = len(dataset.label_dict)
+
+    
 print('patient cls ids:', dataset.patient_cls_ids)
 num_slides_cls = np.array([len(cls_ids) for cls_ids in dataset.patient_cls_ids])
 val_num = np.round(num_slides_cls * args.val_frac).astype(int)

@@ -2,6 +2,7 @@ from .dataset_generic import Generic_MIL_Dataset
 from .dataset_survival import Generic_MIL_Survival_Dataset
 import os
 
+
 def get_survival_dataset(task, seed=119, data_root_dir = None):
     study = '_'.join(task.split('_')[:2])
     if study == 'tcga_kirc' or study == 'tcga_kirp':
@@ -10,8 +11,11 @@ def get_survival_dataset(task, seed=119, data_root_dir = None):
         combined_study = 'tcga_lung'
     else:
         combined_study = study
-    combined_study = combined_study.split('_')[1]
-    dataset = Generic_MIL_Survival_Dataset(csv_path = 'dataset_csv/%s_processed.csv' % combined_study,
+    # combined_study = combined_study.split('_')[1]
+    csv_path = 'dataset_csv/survival_by_case/{}_Splits.csv'.format(combined_study)
+    # dataset = Generic_MIL_Survival_Dataset(csv_path = 'dataset_csv/%s_processed.csv' % combined_study,
+    print(csv_path)
+    dataset = Generic_MIL_Survival_Dataset(csv_path = csv_path,
                                             data_dir= data_root_dir,
                                             shuffle = False, 
                                             seed = seed, 
@@ -193,7 +197,59 @@ def get_subtying_dataset(task, seed=119, data_dir=None):
                                 label_dict = {'Negative':0, 'Positive':1},
                                 patient_strat=False,
                                 ignore=[])
+    elif task == 'eBrains_32':
+        dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/ebrains_fine.csv',
+                                data_dir= None,
+                                shuffle = False, 
+                                seed = seed, 
+                                print_info = True,
+                                label_dict = {'Anaplastic_ependymoma': 0, 'Fibrous_meningioma': 1, 'Anaplastic_astrocytoma__IDH-wildtype': 2,
+                                            'Angiomatous_meningioma': 3, 'Secretory_meningioma': 4, 'Lipoma': 5, 'Pilocytic_astrocytoma': 6, 'Atypical_meningioma': 7, 'Anaplastic_oligodendroglioma__IDH-mutant_and_1p/19q_codeleted': 8,
+                                            'Anaplastic_astrocytoma__IDH-mutant': 9, 'Diffuse_astrocytoma__IDH-mutant': 10, 'Diffuse_large_B-cell_lymphoma_of_the_CNS': 11,
+                                            'Transitional_meningioma': 12,
+                                            'Meningothelial_meningioma': 13,
+                                            'Langerhans_cell_histiocytosis': 14,
+                                            'Gliosarcoma': 15,
+                                            'Ganglioglioma': 16,
+                                            'Anaplastic_meningioma': 17,
+                                            'Chordoma': 18,
+                                            'Schwannoma': 19,
+                                            'Adamantinomatous_craniopharyngioma': 20,
+                                            'Medulloblastoma__non-WNT/non-SHH': 21,
+                                            'Psammomatous_meningioma': 22,
+                                            'Haemangioblastoma': 23,
+                                            'Metastatic_tumours': 24,
+                                            'Haemangioma': 25,
+                                            'Haemangiopericytoma': 26,
+                                            'Ependymoma': 27,
+                                            'Glioblastoma__IDH-mutant': 28,
+                                            'Pituitary_adenoma': 29,
+                                            'Oligodendroglioma__IDH-mutant_and_1p/19q_codeleted': 30,
+                                            'Glioblastoma__IDH-wildtype': 31},
+                                patient_strat=False,
+                                ignore=[])
 
+    elif task == 'eBrains_oncotree':
+        dataset = Generic_MIL_Dataset(csv_path = 'dataset_csv/ebrains_oncotree.csv',
+                                data_dir= None,
+                                shuffle = False, 
+                                seed = seed, 
+                                print_info = True,
+                                label_dict = {'Metastatic Tumor': 0,
+                                                'Diffue Glioma': 1,
+                                                'Ependymomal Tumor': 2,
+                                                'Soft Tissue': 3,
+                                                'Embryonal Tumor': 4,
+                                                'Encapsulated Glioma': 5,
+                                                'Sellar Tumor': 6,
+                                                'Chordoma': 7,
+                                                'Meningothelial Tumor': 8,
+                                                'Miscellaneous Brain Tumor': 9,
+                                                'Schwannoma': 10,
+                                                'Langerhans_cell_histiocytosis': 11},
+                                patient_strat=False,
+                                ignore=[])
+ 
     else:
         raise NotImplementedError
     return dataset

@@ -1,10 +1,10 @@
 prefix="/jhcnas3"
 skip_partial="no" # yes to skip partial file
 
-models="distill_87499"
+models="distill_379999_cls_only"
 
 declare -A gpus
-gpus["phikon"]=1
+gpus["distill_379999_cls_only"]=0
 gpus["ctranspath"]=3
 gpus["plip"]=1
 gpus["conch"]=0

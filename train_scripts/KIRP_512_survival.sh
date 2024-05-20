@@ -2,7 +2,7 @@
 # model_names="moe"
 # backbones="dinov2_vitl||ctranspath"
 model_names="att_mil"
-backbones="phikon"
+backbones="phikon plip uni conch distill_87499"
 
 declare -A in_dim
 in_dim["resnet50"]=1024
@@ -12,20 +12,24 @@ in_dim["plip"]=512
 in_dim["dinov2_vitl"]=1024
 in_dim["ctranspath"]=768
 in_dim["phikon"]=768
+in_dim["uni"]=1024
+in_dim["conch"]=512
+in_dim["distill_87499"]=1024
 
 declare -A gpus
 gpus["plip"]=0
 gpus["max_mil"]=0
-gpus["att_mil"]=6
+gpus["att_mil"]=7
 gpus["moe"]=0
 gpus['llama']=0
 gpus['dtfd']=0
 
-data_root_dir="/storage/Pathology/Patches/TCGA__KIRP"
+# data_root_dir="/storage/Pathology/Patches/TCGA__KIRP"
+data_root_dir="/jhcnas3/Pathology/Patches/TCGA__KIRP"
 root_log="/storage/Pathology/codes/EasyMIL/train_scripts/logs/train_log_KIRP_survival_"
 task="TCGA_KIRP_survival"
-results_dir="/jhcnas3/Pathology/experiments/train/"$task
-# results_dir="/storage/Pathology/results/experiments/train/"$task
+# results_dir="/jhcnas3/Pathology/experiments/train/"$task
+results_dir="/storage/Pathology/results/experiments/train/"$task
 model_size="small" # since the dim of feature of vit-base is 768    
 preloading="no"
 patch_size="512"

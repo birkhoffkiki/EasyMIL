@@ -3,7 +3,7 @@
 model_names="att_mil"
 # model_names="moe"
 
-backbones="distill_87499"
+backbones="distill_379999_cls_only"
 
 #  plip dinov2_vitl"
 # backbones="dinov2_vitl||ctranspath"
@@ -19,12 +19,14 @@ in_dim["dinov2_vitl||ctranspath"]="1024||768"
 in_dim["uni"]=1024
 in_dim["conch"]=512
 in_dim["distill_87499"]=1024
+in_dim["distill_99999"]=1024
+in_dim["distill_379999_cls_only"]=1024
 
 declare -A gpus
 gpus["clam_sb"]=5
 gpus["wikg"]=6
 gpus["max_mil"]=5
-gpus["att_mil"]=1
+gpus["att_mil"]=0
 gpus['simple']=5
 gpus['DTFD']=5
 gpus["moe_a2o"]=5

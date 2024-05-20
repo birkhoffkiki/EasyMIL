@@ -44,7 +44,8 @@ parser.add_argument('--in_dim', type=str, default='1024')
 parser.add_argument('--n_classes', type=int, default=2)
 # new for 712, bootstrapping and balanced evaluation
 parser.add_argument('--bootstrap', action='store_true', default=False)
-
+# for external validation
+parser.add_argument('--models_dir', type=str, default='')
 
 
 
@@ -53,15 +54,17 @@ args = parser.parse_args()
 device=torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 args.save_dir = os.path.join(args.save_dir, str(args.save_exp_code))
-args.models_dir = os.path.join(args.results_dir, str(args.models_exp_code))
+
+if args.models_dir != '':
+    args.models_dir = os.path.join(args.results_dir, str(args.models_exp_code))
 
 os.makedirs(args.save_dir, exist_ok=True)
 
 if args.splits_dir is None:
     args.splits_dir = args.models_dir
 
-assert os.path.isdir(args.models_dir)
-assert os.path.isdir(args.splits_dir)
+assert os.path.isdir(args.models_dir), f"{args.models_dir}"
+assert os.path.isdir(args.splits_dir), f"{args.splits_dir}"
 
 settings = {'task': args.task,
             'split': args.split,
@@ -96,7 +99,7 @@ datasets_id = {'train': 0, 'val': 1, 'test': 2, 'all': -1}
 if __name__ == "__main__":
     # get dataset
     if args.task_type == 'subtyping':
-        dataset = get_subtying_dataset(args.task, args.seed)
+        dataset = get_subtying_dataset(args.task, args.seed, args.data_root_dir)
         
         all_results = []
         all_auc = []
@@ -104,7 +107,7 @@ if __name__ == "__main__":
         all_f1 = []
         
     elif args.task_type == 'survival':
-        dataset = get_survival_dataset(args.task, args.seed)
+        dataset = get_survival_dataset(args.task, args.seed, args.data_root_dir)
         
         all_results = []
         all_c_index = []
@@ -118,10 +121,12 @@ if __name__ == "__main__":
         split_datasets = dataset.return_splits(args.backbone, from_id=False, csv_path=csv_path)
         
         drop_out = 0.25 if args.drop_out else 0.0
+        # reset bag loss to solve incompatible problem
+        bag_loss = 'nll_surv' if args.task_type == 'survival' else 'ce'
         train_engine = TrainEngine(datasets=split_datasets, fold=ckpt_idx, result_dir=args.results_dir, mil_model_name=args.model_type,
                                    optimizer_name='adam', lr=1e-4, regularization=1e-2, weighted_sample=False,
                                    batch_size=1, task_type=args.task_type, max_epochs=1, in_dim=args.in_dim, 
-                                   n_classes=args.n_classes, drop_out=drop_out, dataset_name=args.task)
+                                   n_classes=args.n_classes, drop_out=drop_out, dataset_name=args.task, bag_loss=bag_loss)
         
         print('checkpoint path:', ckpt_paths[ckpt_idx])
         if args.task_type == 'subtyping':
@@ -155,16 +160,20 @@ if __name__ == "__main__":
     final_df.to_csv(os.path.join(args.save_dir, save_name))
 
     # --------- new evaluation-----------
-    if args.task_type == 'subtyping':
-        metric_fn = build_linear_metric(num_classes=args.n_classes, bootstrap=args.bootstrap)
-    else:
-        raise NotImplementedError
-
-
-    for slide_id, content in patient_results.items():
-        metric_fn.update(content['prob'], content['label'])
-    result = metric_fn.compute()
-    with open(os.path.join(args.save_dir, 'result.json'), 'w') as f:
-        json.dump(result, f)
+    if args.bootstrap:
+        print('>> Do bootstrapping...')
+        if args.task_type == 'subtyping':
+            metric_fn = build_linear_metric(num_classes=args.n_classes, bootstrap=args.bootstrap)
+        else:
+            raise NotImplementedError
+        for slide_id, content in patient_results.items():
+            prob = torch.from_numpy(content['prob'])
+            label = torch.tensor(content['label'])[None]
+            metric_fn.update(prob, label)
+        result = metric_fn.compute()
+        result = {k: v.item() for k, v in result.items()}
+        print(result)
+        with open(os.path.join(args.save_dir, 'bootstrap_result.json'), 'w') as f:
+            json.dump(result, f)
 
     

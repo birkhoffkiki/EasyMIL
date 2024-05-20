@@ -4,10 +4,10 @@ dataset="UBC-OCEAN"
 skip_partial="no" # yes to skip partial file
 
 # models="conch uni distill_87499"
-models="uni phikon"
+models="distill_379999_cls_only"
 
 declare -A gpus
-gpus["dinov2_vitl"]=6
+gpus["distill_379999_cls_only"]=0
 gpus["distill_87499"]=7
 gpus["uni"]=6
 gpus["phikon"]=6

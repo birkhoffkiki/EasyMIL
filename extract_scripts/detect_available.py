@@ -13,7 +13,16 @@ meta = {
     'TUPAC': [f'{prefix}/Pathology/Patches/TUPAC16/pt_files'],
     'UBC-OCEAN': [f'{prefix}/Pathology/Patches/UBC-OCEAN/pt_files'],
     'STAD': [f'{prefix}/Pathology/Patches/TCGA__STAD/pt_files'],
-    'COADREAD': [f'{prefix}/Pathology/Patches/TCGA__COADREAD/pt_files']
+    'COADREAD': [f'{prefix}/Pathology/Patches/TCGA__COADREAD/pt_files'],
+    'UCEC': [f'{prefix}/Pathology/Patches/TCGA__UCEC/pt_files'],
+    'LGG': [f'{prefix}/Pathology/Patches/TCGA__LGG/pt_files'],
+    'GBM': [f'{prefix}/Pathology/Patches/TCGA__GBM/pt_files'],
+    'BLCA': [f'{prefix}/Pathology/Patches/TCGA__BLCA/pt_files'],
+    'RCC-DHMC': [f'{prefix}/Pathology/Patches/RCC-DHMC/pt_files'],
+    'CPTAC-GBM': [f'{prefix}/Pathology/Patches/CPTAC__GBM/pt_files'],
+    'CPTAC-COAD': [f'{prefix}/Pathology/Patches/CPTAC__COAD/pt_files'],
+    'CPTAC-UCEC': [f'{prefix}/Pathology/Patches/CPTAC__UCEC/pt_files'],
+    'CPTAC-BRCA': [f'{prefix}/Pathology/Patches/CPTAC__BRCA/pt_files'],
     
 }
 

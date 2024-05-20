@@ -147,10 +147,9 @@ args = parser.parse_args()
 if __name__ == '__main__':
     process_start_time = time.time()
     print('initializing dataset')
-    if not os.path.exists(args.ramdisk_cache):
+    if args.ramdisk_cache:
         os.makedirs(args.ramdisk_cache)
-  
-    ramdisk_engine = RamDiskCache(args.ramdisk_cache, capacity=args.ramdisk_capacity, warning_mem=args.ramdisk_warning_size)
+        ramdisk_engine = RamDiskCache(args.ramdisk_cache, capacity=args.ramdisk_capacity, warning_mem=args.ramdisk_warning_size)
 
     csv_path = args.csv_path
     if csv_path is None:
@@ -274,8 +273,8 @@ if __name__ == '__main__':
         print('coords shape:', coords.shape)
         asset_dict = {'coords': coords}
         save_hdf5_subprocess(output_h5_path, asset_dict=asset_dict)		
-
-        ramdisk_engine.remove_cache(slide_file_path)
+        if args.use_cache=='yes':
+            ramdisk_engine.remove_cache(slide_file_path)
         # clear temp file
         os.remove(output_feature_path+'.partial')
         
