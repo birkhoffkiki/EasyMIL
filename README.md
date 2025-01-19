@@ -1,5 +1,8 @@
 # A Toolkit for Pathology Image Analysis
 
+# Reminder !!!
+Please use the our GPFM repo, the censorship in the survival csv file is flipped.
+
 # Step 1: Patching
 Crop patches from WSI.
 ```bash
